@@ -1,0 +1,39 @@
+Qty Value                    Device                     Package                    
+1                            Terminal Plugable Ijo 2Pin
+1                            Terminal Plugable Ijo 4Pin
+1                            Terminal Plugable Ijo 5Pin
+10                           Terminal Biru 2Pin
+1                            Terminal Biru 3Pin
+1                            BATTERY20PTH               BATTCOM_20MM_PTH           
+4                            FUSE2P                     FUSE1
+8							 Socket FUSE2P                      
+2                            LEDCHIPLED_0805            CHIPLED_0805                                    
+4                            MMBT2222ALT1-NPN-SOT23-BEC SOT23-BEC                  
+1                            RHT03_DHT-22_AM2302        RHT03_DHT-22               
+1                            RTC_DS1307                 SOIC8_150MIL               
+1                            SIMHOLDERSIM               SIMHOLDER                  
+1                            SMACONNECTOR               SMA90_DIP                      
+1                            TVSARRAY_5LANE             SOT363                     
+1   1N4007                   DIODE-DO214AA              DO214AA                    
+2   1X2-3.5MM                Connector Putih untuk kipas                  
+1   32kHz                    CRYSTALTC38H               TC38H                      
+1   74HC4053D                74HC4053D                  SO16                       
+1   74HC595D                 74HC595D                   SO16                       
+2   ACS712                   ACS712-20A                 SO08                                                       
+5   C100nF                   C-EUC0805                  C0805                      
+2   C100uF                   CPOL-EU153CLV-0605         153CLV-0605                
+2   C1nF                     C-EUC0805K                 C0805K                     
+2   C22pF                    C-EUC0805                  C0805                      
+2   C4.7uF                   C-EUC0805                  C0805                                            
+1   G5L                      Relay 12V/20A              G5LE                       
+1   R100K                    R-EU_0309/10               0309/10                    
+26  R10K                     R-EU_R0805                 R0805                      
+1   R120R                    R-EU_R0805                 R0805                      
+9   R1K                      R-EU_R0805                 R0805                      
+2   R220R                    R-EU_R0805                 R0805                      
+3   R22R                     R-EU_R0805                 R0805                      
+1   R2K                      R-EU_0309/10               0309/10                    
+6   R2K                      R-EU_R0805                 R0805                      
+1   R5K                      R-EU_R0805                 R0805                      
+1   RASPBERRY_PI_B+_HEADER            
+1   TRANSFORMER              TRANSFORMER                TV16                       

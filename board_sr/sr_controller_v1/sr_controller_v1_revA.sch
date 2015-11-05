@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -20918,6 +20918,9 @@ Based on the following sources:
 <part name="J7" library="powercube" deviceset="WIRE_HOLE-14AWG" device=""/>
 <part name="J8" library="powercube" deviceset="WIRE_HOLE-14AWG" device=""/>
 <part name="J9" library="powercube" deviceset="WIRE_HOLE-14AWG" device=""/>
+<part name="DUMMY_A" library="con-ptr500" deviceset="AK500/2" device=""/>
+<part name="DUMMY_B" library="con-ptr500" deviceset="AK500/2" device=""/>
+<part name="DUMMY_C" library="con-ptr500" deviceset="AK500/2" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -21209,6 +21212,12 @@ Based on the following sources:
 <instance part="J7" gate="G$1" x="406.4" y="129.54"/>
 <instance part="J8" gate="G$1" x="406.4" y="119.38"/>
 <instance part="J9" gate="G$1" x="406.4" y="109.22"/>
+<instance part="DUMMY_A" gate="-1" x="335.28" y="-25.4"/>
+<instance part="DUMMY_A" gate="-2" x="335.28" y="-29.21"/>
+<instance part="DUMMY_B" gate="-1" x="335.28" y="-33.02"/>
+<instance part="DUMMY_B" gate="-2" x="335.28" y="-36.83"/>
+<instance part="DUMMY_C" gate="-1" x="335.28" y="-40.64"/>
+<instance part="DUMMY_C" gate="-2" x="335.28" y="-44.45"/>
 </instances>
 <busses>
 </busses>

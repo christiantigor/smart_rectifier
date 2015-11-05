@@ -1,0 +1,48 @@
+Partlist exported from C:/Users/tritronik/Documents/GitHub/smart_rectifier/board_sr/sr_controller_v1/sr_controller_v1_revA.sch at 30/10/2015 12:59:40
+
+Qty Value                    Device                     Package                    
+10                           AK300/2                    AK300/2                    
+1                            AK300/3                    AK300/3                    
+1                            AK300/5                    AK300/5                    
+3                            AK500/2                    AK500/2                    
+1                            BATTERY20PTH               BATTCOM_20MM_PTH           
+4                            FUSE2P                     FUSE1                      
+1                            GSM_SIM900_LITERAL         SIM900_SMT                 
+2                            LEDCHIPLED_0805            CHIPLED_0805               
+1                            MA08-2                     MA08-2                     
+4                            MMBT2222ALT1-NPN-SOT23-BEC SOT23-BEC                  
+1                            RHT03_DHT-22_AM2302        RHT03_DHT-22               
+1                            RTC_DS1307                 SOIC8_150MIL               
+1                            SIMHOLDERSIM               SIMHOLDER                  
+1                            SMACONNECTOR               SMA90_DIP                  
+2                            SOLDERJUMPER               SOLDERJUMPER_ARROW_NOPASTE 
+1                            SOLDERJUMPERCLOSED         SOLDERJUMPER_CLOSEDWIRE    
+1                            TVSARRAY_5LANE             SOT363                     
+1   1N4007                   DIODE-DO214AA              DO214AA                    
+2   1X2-3.5MM                1X2-3.5MM                  1X2-3.5MM                  
+1   32kHz                    CRYSTALTC38H               TC38H                      
+1   74HC4053D                74HC4053D                  SO16                       
+1   74HC595D                 74HC595D                   SO16                       
+2   ACS712                   ACS712                     SO08                       
+1   ARDUINO_PRO_MINI         ARDUINO_PRO_MINI           ARDUINO_PRO_MINI           
+3   C100N                    C-EUC0805K                 C0805K                     
+2   C100nF                   C-EUC0805                  C0805                      
+2   C100uF                   CPOL-EU153CLV-0605         153CLV-0605                
+2   C1N                      C-EUC0805K                 C0805K                     
+2   C22pF                    C-EUC0805                  C0805                      
+2   C4.7uF                   C-EUC0805                  C0805                      
+2   DCDCMODULE               DCDCMODULE                 DCDCMODULE                 
+1   FB0603                   L0603                      L0603                      
+1   G5L                      G5L                        G5LE                       
+1   R100K                    R-EU_0309/10               0309/10                    
+26  R10K                     R-EU_R0805                 R0805                      
+1   R120R                    R-EU_R0805                 R0805                      
+9   R1K                      R-EU_R0805                 R0805                      
+2   R220R                    R-EU_R0805                 R0805                      
+3   R22R                     R-EU_R0805                 R0805                      
+1   R2K                      R-EU_0309/10               0309/10                    
+6   R2K                      R-EU_R0805                 R0805                      
+1   R5K                      R-EU_R0805                 R0805                      
+1   RASPBERRY_PI_B+_NO_MOUNT RASPBERRY_PI_B+_NO_MOUNT   RASPBERRY_PI_B+            
+1   TRANSFORMER              TRANSFORMER                TV16                       
+8   WIRE_HOLE-14AWG          WIRE_HOLE-14AWG            WIRE_HOLE-14AWG            

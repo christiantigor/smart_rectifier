@@ -1,0 +1,43 @@
+Qty Value                    Device                     Package                    
+2                            Terminal Plugable Ijo 2Pin
+2                            Terminal Plugable Ijo 4Pin
+2                            Terminal Plugable Ijo 5Pin
+20                           Terminal Biru 2Pin
+2                            Terminal Biru 3Pin
+2                            BATTERY20PTH               BATTCOM_20MM_PTH           
+8                            FUSE2P                     FUSE1
+16							 Socket FUSE2P                      
+4                            LEDCHIPLED_0805            CHIPLED_0805                                    
+8                            MMBT2222ALT1-NPN-SOT23-BEC SOT23-BEC                  
+2                            RHT03_DHT-22_AM2302        RHT03_DHT-22               
+2                            RTC_DS1307                 SOIC8_150MIL               
+2                            SIMHOLDERSIM               SIMHOLDER                  
+2                            SMACONNECTOR               SMA90_DIP
+2                            SMACONNECTOR Cable                      
+2                            TVSARRAY_5LANE             SOT363                     
+2   1N4007                   DIODE-DO214AA              DO214AA                    
+4   1X2-3.5MM                Connector Putih untuk kipas
+4	Kipas 8x8cm                  
+2   32kHz                    CRYSTALTC38H               TC38H                      
+2   74HC4053D                74HC4053D                  SO16                       
+2   74HC595D                 74HC595D                   SO16                       
+4   ACS712                   ACS712-20A                 SO08                                                       
+10  C100nF                   C-EUC0805                  C0805                      
+4   C100uF                   CPOL-EU153CLV-0605         153CLV-0605                
+4   C1nF                     C-EUC0805K                 C0805K                     
+4   C22pF                    C-EUC0805                  C0805                      
+4   C4.7uF                   C-EUC0805                  C0805                                            
+2   G5L                      Relay 12V/20A              G5LE                       
+2   R100K                    R-EU_0309/10               0309/10                    
+52  R10K                     R-EU_R0805                 R0805                      
+2   R120R                    R-EU_R0805                 R0805                      
+18  R1K                      R-EU_R0805                 R0805                      
+4   R220R                    R-EU_R0805                 R0805                      
+6   R22R                     R-EU_R0805                 R0805                      
+2   R2K                      R-EU_0309/10               0309/10                    
+12  R2K                      R-EU_R0805                 R0805                      
+2   R5K                      R-EU_R0805                 R0805
+2   TRANSFORMER              TRANSFORMER                TV16                      
+2   Connector IDC 2x40 female-female for RPi                                   
+2   Connector IDC 2x8 female-female for LED Indicator
+4   Large switch AC snub model 20A rating
