@@ -67,6 +67,21 @@ def main():
             #print data
             
             #Get modem type
+            indc0 = pi.read(20)
+            indc1 = pi.read(12)
+            indc2 = pi.read(16)
+            #print 'indc0:%d - indc1:%d - indc2:%d' % (pi.read(20),pi.read(12),pi.read(16))
+            if indc0 == 0 and indc1 == 1 and indc2 == 1:
+                dtModemType = 'Hughes HX-50'
+            elif indc0 == 1 and indc1 == 0 and indc2 == 0:
+                dtModemType = 'Hughes HT-1300'
+            elif indc0 == 1 and indc1 == 0 and indc2 == 1:
+                dtModemType = 'iDirect X-1'
+            elif indc0 == 1 and indc1 == 1 and indc2 == 0:
+                dtModemType = 'iDirect X-3'
+            else:
+                dtModemType = 'NULL'
+            
             
             #Save data to DB
             if loop >= (int(savePeriod*60/sleepPeriod)):
@@ -93,19 +108,19 @@ def main():
                     with db:
                         cmd = ('INSERT INTO sensorDataHistory ' +
                               'values("' + dtDate + '","' + dtTime  + '",' +
-                              str(jsonObj["VAC"]) + ',' +
-                              str(jsonObj["VBat"]) + ',' +
-                              str(jsonObj["IBat"]) + ',' +
-                              str(jsonObj["ILoad"]) + ',' +
-                              '"HughesHT",' +
-                              str(jsonObj["Modem0"]) + ',' +
-                              str(jsonObj["Modem1"]) + ',' +
-                              str(jsonObj["Modem2"]) + ',' +
-                              str(jsonObj["Modem3"]) + ',' +
-                              str(jsonObj["BUC"]) + ',' +
-                              str(jsonObj["SCPC"]) + ',' +
-                              str(jsonObj["SCADA"]) + ',' +
-                              '123.4,' +
+                              str(jsonObj.get("VAC","NULL")) + ',' +
+                              str(jsonObj.get("VBat","NULL")) + ',' +
+                              str(jsonObj.get("IBat","NULL")) + ',' +
+                              str(jsonObj.get("ILoad","NULL")) + ',' +
+                              '"' + dtModemType + '",' +
+                              str(jsonObj.get("Modem0","NULL")) + ',' +
+                              str(jsonObj.get("Modem1","NULL")) + ',' +
+                              str(jsonObj.get("Modem2","NULL")) + ',' +
+                              str(jsonObj.get("Modem3","NULL")) + ',' +
+                              str(jsonObj.get("BUC","NULL")) + ',' +
+                              str(jsonObj.get("SCPC","NULL")) + ',' +
+                              str(jsonObj.get("SCADA","NULL")) + ',' +
+                              str(jsonObj.get("Temp","NULL")) + ',' +
                               '0)')
                         print cmd
                         curs.execute(cmd)
