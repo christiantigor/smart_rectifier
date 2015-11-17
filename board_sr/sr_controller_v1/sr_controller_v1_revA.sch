@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -20732,7 +20732,7 @@ Based on the following sources:
 <part name="GND17" library="supply1" deviceset="GND" device=""/>
 <part name="R6" library="resistor" deviceset="R-EU_" device="R0805" value="R1K"/>
 <part name="R7" library="resistor" deviceset="R-EU_" device="R0805" value="R10K"/>
-<part name="R8" library="resistor" deviceset="R-EU_" device="R0805" value="R1K"/>
+<part name="R8" library="resistor" deviceset="R-EU_" device="R0805" value="R220R"/>
 <part name="GND18" library="supply1" deviceset="GND" device=""/>
 <part name="U$2" library="SparkFun-AnalogIC" deviceset="ACS712" device=""/>
 <part name="C3" library="resistor" deviceset="C-EU" device="C0805K" value="C100N"/>
@@ -20749,13 +20749,13 @@ Based on the following sources:
 <part name="C6" library="resistor" deviceset="C-EU" device="C0805K" value="C1N"/>
 <part name="AGND5" library="supply1" deviceset="AGND" device=""/>
 <part name="R10" library="resistor" deviceset="R-EU_" device="R0805" value="R10K"/>
-<part name="R11" library="resistor" deviceset="R-EU_" device="R0805" value="R2K"/>
+<part name="R11" library="resistor" deviceset="R-EU_" device="R0805" value="R1K"/>
 <part name="R12" library="resistor" deviceset="R-EU_" device="R0805" value="R10K"/>
 <part name="R13" library="resistor" deviceset="R-EU_" device="R0805" value="R1K"/>
 <part name="R14" library="resistor" deviceset="R-EU_" device="R0805" value="R10K"/>
-<part name="R15" library="resistor" deviceset="R-EU_" device="R0805" value="R2K"/>
+<part name="R15" library="resistor" deviceset="R-EU_" device="R0805" value="R10K"/>
 <part name="R16" library="resistor" deviceset="R-EU_" device="R0805" value="R10K"/>
-<part name="R17" library="resistor" deviceset="R-EU_" device="R0805" value="R5K"/>
+<part name="R17" library="resistor" deviceset="R-EU_" device="R0805" value="R5.1K"/>
 <part name="GND21" library="supply1" deviceset="GND" device=""/>
 <part name="IC1" library="microbuilder" deviceset="GSM_SIM900_LITERAL" device=""/>
 <part name="GND22" library="supply1" deviceset="GND" device=""/>
@@ -20817,13 +20817,13 @@ Based on the following sources:
 <part name="GND45" library="supply1" deviceset="GND" device=""/>
 <part name="P+9" library="supply1" deviceset="+5V" device=""/>
 <part name="R28" library="resistor" deviceset="R-EU_" device="R0805" value="R10K"/>
-<part name="R29" library="resistor" deviceset="R-EU_" device="R0805" value="R2K"/>
+<part name="R29" library="resistor" deviceset="R-EU_" device="R0805" value="R5.1K"/>
 <part name="R30" library="resistor" deviceset="R-EU_" device="R0805" value="R1K"/>
 <part name="R31" library="resistor" deviceset="R-EU_" device="R0805" value="R2K"/>
 <part name="GND46" library="supply1" deviceset="GND" device=""/>
 <part name="U$9" library="bontor" deviceset="TRANSFORMER" device=""/>
-<part name="R32" library="resistor" deviceset="R-EU_" device="0309/10" value="R100K"/>
-<part name="R33" library="resistor" deviceset="R-EU_" device="0309/10" value="R2K"/>
+<part name="R32" library="resistor" deviceset="R-EU_" device="0309/10" value="R270K"/>
+<part name="R33" library="resistor" deviceset="R-EU_" device="0309/10" value="R5.1K"/>
 <part name="C14" library="resistor" deviceset="C-EU" device="C0805K" value="C100N"/>
 <part name="AGND6" library="supply1" deviceset="AGND" device=""/>
 <part name="R2" library="resistor" deviceset="R-EU_" device="R0805" value="R10K"/>
