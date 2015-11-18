@@ -9,7 +9,7 @@ import time
 
 RXD = 8
 baud = 9600
-savePeriod = 1  #In minute
+savePeriod = 15  #In minute
 sleepPeriod = 5 #In second
 
 def isJson(myJson):
@@ -82,8 +82,33 @@ def main():
             else:
                 dtModemType = 'NULL'
             
+            #Update data to current DB
+            if(isJson(data)):
+                jsonObj = json.loads(data)
+                db = MySQLdb.connect("localhost","monitor","1234","smartRectifier")
+                curs = db.cursor()
+                with db:
+                    cmd = ('UPDATE sensorDataCurrent SET ' +
+                          'srVAC = ' + str(jsonObj.get("VAC","NULL")) + ', ' +
+                          'srVBat = ' + str(jsonObj.get("VBat","NULL")) + ', ' +
+                          'srIBat = ' + str(jsonObj.get("IBat","NULL")) + ', ' +
+                          'srILoad = ' + str(jsonObj.get("ILoad","NULL")) + ', ' +
+                          'mdmType = "' + dtModemType + '", ' +
+                          'srMdm0 = ' + str(jsonObj.get("Modem0","NULL")) + ', ' +
+                          'srMdm1 = ' + str(jsonObj.get("Modem1","NULL")) + ', ' +
+                          'srMdm2 = ' + str(jsonObj.get("Modem2","NULL")) + ', ' +
+                          'srMdm3 = ' + str(jsonObj.get("Modem3","NULL")) + ', ' +
+                          'srBUC = ' + str(jsonObj.get("BUC","NULL")) + ', ' +
+                          'srSCPC = ' + str(jsonObj.get("SCPC","NULL")) + ', ' +
+                          'srSCADA = ' + str(jsonObj.get("SCADA","NULL")) + ', ' +
+                          'srTemp = ' + str(jsonObj.get("Temp","NULL")) + ' ' +
+                          'WHERE name = "currentData"'
+                          )
+                    #print cmd
+                    curs.execute(cmd)
+                db.close()
             
-            #Save data to DB
+            #Save data to history DB
             if loop >= (int(savePeriod*60/sleepPeriod)):
                 if(isJson(data)):
                     jsonObj = json.loads(data)
