@@ -44,17 +44,17 @@ class srTemp(object):
                 "sensorid": int(data['sensorid']),
                 "error": "Exception",
                 "code": 1,
-                "message": "Temperature sensor failed. See log for details."
+                "message": "Temp sensor failed. See log for details."
             }
             out_queue.put(data)
             return 1
-        voltData = []
-        for element in srvacData:
-            voltData.append(element)
+        tempData = []
+        for element in srtempData:
+            tempData.append(element)
         data = {
             "sensorid": int(data['sensorid']),
             "message": "OK",
-            "channel": voltData
+            "channel": tempData
         }
         del srtemp
         gc.collect()
@@ -75,15 +75,21 @@ class srTemp(object):
         db.close()
         data.append(value[0])
 
+        #Update data to NULL
+        db = MySQLdb.connect("localhost","monitor","1234","smartRectifier")
+        curs = db.cursor()
+        with db:
+            cmd = 'UPDATE sensorDataCurrent SET srTemp = NULL WHERE name = "currentData"'
+            curs.execute(cmd)
+        db.close()
+
         for i in range(len(data)):
             chandata.append({"name": "Temperature",
                              "mode": "float",
                              "unit": "Custom",
                              "customunit": "C",
                              "LimitMode": 1,
-                             "LimitMaxError": 60.0,
-                             "LimitMaxWarning": 50.0,
-                             "LimitMinWarning": 20.0,
-                             "LimitMinError": 10.0,
+                             "LimitMaxError": 90.0,
+                             "LimitMaxWarning": 80.0,
                              "value": float(data[i])})
         return chandata

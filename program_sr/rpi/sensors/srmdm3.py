@@ -75,6 +75,14 @@ class srMdm3(object):
         db.close()
         data.append(value[0])
 
+        #Update data to NULL
+        db = MySQLdb.connect("localhost","monitor","1234","smartRectifier")
+        curs = db.cursor()
+        with db:
+            cmd = 'UPDATE sensorDataCurrent SET srMdm3 = NULL WHERE name = "currentData"'
+            curs.execute(cmd)
+        db.close()
+
         for i in range(len(data)):
             chandata.append({"name": "Modem Supply (24V)",
                              "mode": "float",

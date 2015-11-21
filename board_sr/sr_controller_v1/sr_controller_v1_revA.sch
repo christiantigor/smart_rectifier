@@ -20848,9 +20848,9 @@ Based on the following sources:
 <part name="MDM_REG_B" library="con-ptr500" deviceset="AK300/2" device=""/>
 <part name="SCADA_REG_A" library="con-ptr500" deviceset="AK300/2" device=""/>
 <part name="SCADA_REG_B" library="con-ptr500" deviceset="AK300/2" device=""/>
-<part name="F1" library="special" deviceset="FUSE2P" device=""/>
-<part name="F3" library="special" deviceset="FUSE2P" device=""/>
-<part name="F4" library="special" deviceset="FUSE2P" device=""/>
+<part name="F1" library="special" deviceset="FUSE2P" device="" value="4A"/>
+<part name="F3" library="special" deviceset="FUSE2P" device="" value="10A"/>
+<part name="F4" library="special" deviceset="FUSE2P" device="" value="7A"/>
 <part name="INDICATOR_CONN" library="con-lstb" deviceset="MA08-2" device=""/>
 <part name="GND2" library="supply1" deviceset="GND" device=""/>
 <part name="IC2" library="74xx-eu" deviceset="74*595" device="D" technology="HC"/>
@@ -20899,7 +20899,7 @@ Based on the following sources:
 <part name="GND51" library="supply1" deviceset="GND" device=""/>
 <part name="GND52" library="supply1" deviceset="GND" device=""/>
 <part name="FROM_LTC_REG" library="con-ptr500" deviceset="AK300/3" device=""/>
-<part name="F5" library="special" deviceset="FUSE2P" device=""/>
+<part name="F5" library="special" deviceset="FUSE2P" device="" value="4A"/>
 <part name="MDM_SPLY_HT_X1_X3" library="con-ptr500" deviceset="AK300/5" device=""/>
 <part name="R5" library="resistor" deviceset="R-EU_" device="R0805" value="R1K"/>
 <part name="MDM_SPLY_HX_A" library="con-ptr500" deviceset="AK500/2" device=""/>
