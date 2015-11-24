@@ -19,6 +19,8 @@ byte pinSCPC  = 7;
 
 //sensor value
 int adcVal       = 0;
+long sumAdcVal   = 0;
+int numSamples   = 200;
 float valVAC     = 0.0;
 float valIBat    = 0.0;
 float valVBat    = 0.0;
@@ -51,12 +53,16 @@ char charData[8];
 String strJSON;
 String strData;
 
+int supplyVoltage;
+
 void setup(){
   Serial.begin(9600);
   
   //begin DHT11
   dht.begin();
   delay(2000);
+  
+  //set sensor pin as input
   
   //set control pin as output
   pinMode(pinSelSens1, OUTPUT);
@@ -95,6 +101,9 @@ void loop(){
   setPin(7,HIGH);
   */
   
+  //read vcc
+  //supplyVoltage = readVcc();
+  
   //read sensor value
   adcVal = analogRead(pinVAC);  //for future revision
   valVAC = adcVal*1.0;
@@ -104,38 +113,70 @@ void loop(){
     setPin(0,LOW);
   }
   
-  adcVal = analogRead(pinIBat);
-  valIBat = (adcVal-512.0)*0.073982;
+  //IBat
+  sumAdcVal = 0;
+  for(int i=0; i<numSamples; i++) {
+    sumAdcVal += analogRead(pinIBat);  
+  }
+  adcVal = int(sumAdcVal/numSamples);
+  valIBat = (adcVal-511.0)*0.073982;
+  //res_adc(V/step) / res_acs(V/A) = A/step
+  //5/1024          / 0.066
   
-  adcVal = analogRead(pinVBat);
-  valVBat = adcVal*0.2268288;
+  //VBat
+  sumAdcVal = 0;
+  for(int i=0; i<numSamples; i++) {
+    sumAdcVal += analogRead(pinVBat);  
+  }
+  adcVal = int(sumAdcVal/numSamples);
+  valVBat = adcVal * 0.2334090909;
   if(valVBat < 30 || valVBat > 70) {
     setPin(2,HIGH);
   } else {
     setPin(2,LOW);
   }
   
-  adcVal = analogRead(pinILoad);
-  valILoad = (adcVal-512.0)*0.073982;
+  //ILoad
+  sumAdcVal = 0;
+  for(int i=0; i<numSamples; i++) {
+    sumAdcVal += analogRead(pinILoad);  
+  }
+  adcVal = int(sumAdcVal/numSamples);
+  valILoad = (adcVal-511.0)*0.073982;
   
-  adcVal = analogRead(pinBUC);
-  valBUC = adcVal*0.0537109;
+  //BUC
+  sumAdcVal = 0;
+  for(int i=0; i<numSamples; i++) {
+    sumAdcVal += analogRead(pinBUC);  
+  }
+  adcVal = int(sumAdcVal/numSamples);
+  valBUC = adcVal * 0.0537605042;
   if(valBUC < 20 || valBUC > 60) {
     setPin(1,HIGH);
   } else {
     setPin(1,LOW);
   }
   
-  adcVal = analogRead(pinSCADA);
-  valSCADA = adcVal*0.014457;
+  //SCADA
+  sumAdcVal = 0;
+  for(int i=0; i<numSamples; i++) {
+    sumAdcVal += analogRead(pinSCADA);  
+  }
+  adcVal = int(sumAdcVal/numSamples);
+  valSCADA = adcVal * 0.0144177671;
   if(valSCADA < 8 || valSCADA > 16) {
     setPin(5,HIGH);
   } else {
     setPin(5,LOW);
   }
   
-  adcVal = analogRead(pinSCPC);
-  valSCPC = adcVal*0.0537109;
+  //SCPC
+  sumAdcVal = 0;
+  for(int i=0; i<numSamples; i++) {
+    sumAdcVal += analogRead(pinSCPC);  
+  }
+  adcVal = int(sumAdcVal/numSamples);
+  valSCPC = adcVal * 0.0536163522;
   if(valSCPC < 20 || valSCPC > 60) {
     setPin(3,HIGH);
   } else {
@@ -146,8 +187,12 @@ void loop(){
   digitalWrite(pinSelSens1, LOW);
   digitalWrite(pinSelSens3, LOW);
   delay(100);
-  adcVal = analogRead(pinModem);
-  valModem0 = adcVal*0.0097656;
+  sumAdcVal = 0;
+  for(int i=0; i<numSamples; i++) {
+    sumAdcVal += analogRead(pinModem);  
+  }
+  adcVal = int(sumAdcVal/numSamples);
+  valModem0 = adcVal * 0.0097848664;
   if(valModem0 < 3 || valModem0 > 11) {
     digitalWrite(led8, HIGH);
   } else {
@@ -158,8 +203,12 @@ void loop(){
   digitalWrite(pinSelSens1, HIGH);
   digitalWrite(pinSelSens2, LOW);
   delay(100);
-  adcVal = analogRead(pinModem);
-  valModem1 = adcVal*0.014457;
+  sumAdcVal = 0;
+  for(int i=0; i<numSamples; i++) {
+    sumAdcVal += analogRead(pinModem);  
+  }
+  adcVal = int(sumAdcVal/numSamples);
+  valModem1 = adcVal * 0.0144551282;
   if(valModem1 < 10 || valModem1 > 18) {
     setPin(6,HIGH);
   } else {
@@ -170,8 +219,12 @@ void loop(){
   digitalWrite(pinSelSens1, LOW);
   digitalWrite(pinSelSens3, HIGH);
   delay(100);
-  adcVal = analogRead(pinModem);
-  valModem2 = adcVal*0.0292969;
+  sumAdcVal = 0;
+  for(int i=0; i<numSamples; i++) {
+    sumAdcVal += analogRead(pinModem);  
+  }
+  adcVal = int(sumAdcVal/numSamples);
+  valModem2 = adcVal * 0.0292653673;
   if(valModem2 < 16 || valModem2 > 24) {
     digitalWrite(led9, HIGH);
   } else {
@@ -182,8 +235,12 @@ void loop(){
   digitalWrite(pinSelSens1, HIGH);
   digitalWrite(pinSelSens2, HIGH);
   delay(100);
-  adcVal = analogRead(pinModem);
-  valModem3 = adcVal*0.0292969;
+  sumAdcVal = 0;
+  for(int i=0; i<numSamples; i++) {
+    sumAdcVal += analogRead(pinModem);  
+  }
+  adcVal = int(sumAdcVal/numSamples);
+  valModem3 = adcVal * 0.0293917274;
   if(valModem3 < 20 || valModem3 > 28) {
     setPin(7,HIGH);
   } else {
@@ -276,4 +333,16 @@ void registerWrite() {
   digitalWrite(pinLatch, LOW);
   shiftOut(pinData, pinClock, MSBFIRST, ledCtrl);
   digitalWrite(pinLatch, HIGH);
+}
+
+long readVcc() {
+  long result;
+  ADMUX = _BV(REFS0) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
+  delay(2);                                        // Wait for Vref to settle
+  ADCSRA |= _BV(ADSC);                             // Convert
+  while (bit_is_set(ADCSRA,ADSC));
+  result = ADCL;
+  result |= ADCH<<8;
+  result = 1126400L / result;                     //1100mV*1024 ADC steps http://openenergymonitor.org/emon/node/1186
+  return result;
 }

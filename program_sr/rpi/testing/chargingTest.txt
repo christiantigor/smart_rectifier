@@ -1,0 +1,8 @@
+Procedure:
+- Truncate DB history (if necessary)
+- Turn off cronjob
+reboot
+- Run pigpiod
+- Start prtgprobe
+- Run getSensorData.py
+- Run control switch manual
