@@ -20,6 +20,7 @@ byte pinSCPC  = 7;
 //sensor value
 int adcVal       = 0;
 long sumAdcVal   = 0;
+long numReading  = 0;
 int numSamples   = 200;
 float valVAC     = 0.0;
 float valIBat    = 0.0;
@@ -44,9 +45,10 @@ byte pinLatch = 4;
 byte pinClock = 3;
 byte pinData  = 5;
 
-//led8 and led9
+//led8, led9, and arduFlash
 byte led8 = 12;
 byte led9 = 13;
+byte arduFlash = 11;
 
 //sensor data to send
 char charData[8];
@@ -54,6 +56,7 @@ String strJSON;
 String strData;
 
 int supplyVoltage;
+boolean zeroCross = false;
 
 void setup(){
   Serial.begin(9600);
@@ -74,9 +77,10 @@ void setup(){
   pinMode(pinClock, OUTPUT);
   pinMode(pinData, OUTPUT);
   
-  //set led8 and led9 as output
+  //set led8, led9, and arduFlash as output
   pinMode(led8, OUTPUT);
   pinMode(led9, OUTPUT);
+  pinMode(arduFlash, OUTPUT);
   
   //set control pin default
   digitalWrite(pinSelSens1, LOW);
@@ -105,13 +109,43 @@ void loop(){
   //supplyVoltage = readVcc();
   
   //read sensor value
-  adcVal = analogRead(pinVAC);  //for future revision
-  valVAC = adcVal*1.0;
+  //VAC
+  unsigned long start = millis();
+  
+  while(!zeroCross) {
+    adcVal = analogRead(pinVAC);
+    //Serial.println(adcVal);
+    if(adcVal < 3) {
+      zeroCross = true;
+    }
+    if((millis()-start)>2000) zeroCross = true;
+  }
+  
+  start = millis();
+  sumAdcVal  = 0;
+  numReading = 0;
+  while(true){
+    sumAdcVal += analogRead(pinVAC);
+    numReading++;
+    if((millis()-start)>1000) break;
+  }
+  adcVal = int(sumAdcVal/numReading);
+  //Serial.println(adcVal);
+  
+  if(adcVal > 350.0) {
+    //valVAC = adcVal * 1.0;
+    //valVAC = adcVal * 0.4540598290;
+    valVAC = 1.265377856 * adcVal - 388,1546573;
+  } else {
+    valVAC = 0.0;  //To handle case when there is no VAC, but read by ADC
+  }
+  
   if(valVAC < 180 || valVAC > 260) {
     setPin(0,HIGH);
   } else {
     setPin(0,LOW);
   }
+  zeroCross = false;
   
   //IBat
   sumAdcVal = 0;
@@ -119,7 +153,7 @@ void loop(){
     sumAdcVal += analogRead(pinIBat);  
   }
   adcVal = int(sumAdcVal/numSamples);
-  valIBat = (adcVal-511.0)*0.073982;
+  valIBat = (adcVal-511.0) * 0.073982;
   //res_adc(V/step) / res_acs(V/A) = A/step
   //5/1024          / 0.066
   
@@ -322,7 +356,10 @@ void loop(){
   //update shift register
   registerWrite();
   
-  delay(5000);
+  delay(4000);
+  digitalWrite(arduFlash, HIGH);
+  delay(200);
+  digitalWrite(arduFlash, LOW);
 }
 
 void setPin(byte whichPin, byte whichState) {

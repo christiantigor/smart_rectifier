@@ -9,7 +9,9 @@ import time
 
 RXD = 8
 baud = 9600
-savePeriod = 15  #In minute
+#savePeriod = 15  #In minute
+savePeriod = 5	#For battery discharging test
+#savePeriod = 0.25 #0.25 minute or 15 second
 sleepPeriod = 5 #In second
 
 def isJson(myJson):
@@ -104,9 +106,28 @@ def main():
                           'srTemp = ' + str(jsonObj.get("Temp","NULL")) + ' ' +
                           'WHERE name = "currentData"'
                           )
-                    #print cmd
+                    print cmd
                     curs.execute(cmd)
                 db.close()
+
+            #Count number record on history DB
+            db = MySQLdb.connect("localhost","monitor","1234","smartRectifier")
+            curs = db.cursor()
+            with db:
+                cmd = ('SELECT COUNT(*) FROM sensorDataHistory')
+                #print cmd
+                curs.execute(cmd)
+                fo = curs.fetchone()
+                num = fo[0]
+                if num > 400:
+                    cmd = ('DELETE FROM sensorDataHistory WHERE sendStatus = 1 LIMIT 5')
+                    print cmd
+                    curs.execute(cmd)
+                if num > 10000:
+                    cmd = ('TRUNCATE sensorDataHistory')
+                    print cmd
+                    curs.execute(cmd)
+            db.close()
             
             #Save data to history DB
             if loop >= (int(savePeriod*60/sleepPeriod)):
