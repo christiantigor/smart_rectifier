@@ -82,6 +82,30 @@ def main():
         print 'prtgprobe is running'
     
     #check sendSensorData
+    cmd = 'ps aux | grep sendSensorData.py | grep -v grep'
+    psCheck = subprocess.Popen(
+        [cmd],
+        stdout = subprocess.PIPE,
+        stderr = subprocess.PIPE,
+        shell = True
+    )
+    out, err = psCheck.communicate()
+
+    if not bool(re.search('sendSensorData.py',out)):
+        cmd = 'python sendSensorData.py'
+        psRun = subprocess.Popen(
+            [cmd],
+            stdout = subprocess.PIPE,
+            stderr = subprocess.PIPE,
+            shell = True
+        )
+        time.sleep(3)
+        psRun.terminate()
+        psRun.wait()
+        print 'start sendSensorData.py'
+    else:
+        print 'sendSensorData.py is running'
+
     #check ledFlasher
     cmd = 'ps aux | grep ledFlasher.py | grep -v grep'
     psCheck = subprocess.Popen(
@@ -106,6 +130,31 @@ def main():
         print 'start ledFlasher.py'
     else:
         print 'ledFlasher.py is running'
+
+    #check setDefaultConfig
+    cmd = 'ps aux | grep setDefaultConfig.py | grep -v grep'
+    psCheck = subprocess.Popen(
+        [cmd],
+        stdout = subprocess.PIPE,
+        stderr = subprocess.PIPE,
+        shell = True
+    )
+    out, err = psCheck.communicate()
+
+    if not bool(re.search('setDefaultConfig.py',out)):
+        cmd = 'python setDefaultConfig.py'
+        psRun = subprocess.Popen(
+            [cmd],
+            stdout = subprocess.PIPE,
+            stderr = subprocess.PIPE,
+            shell = True
+        )
+        time.sleep(3)
+        psRun.terminate()
+        psRun.wait()
+        print 'start setDefaultConfig.py'
+    else:
+        print 'setDefaultConfig.py is running'
 
 if __name__ == '__main__':
     main()

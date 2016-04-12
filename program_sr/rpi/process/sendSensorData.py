@@ -13,7 +13,7 @@ hostName = 'demo.tritronik.com'
 hostIP   = '36.80.35.8'
 hostPort = 8080
 urlName  = '/tsr/tsr/upload'
-sleepPeriod = 5 #In second
+sleepPeriod = 300 #In second
 
 def gprsIsConnect():
     ser = serial.Serial('/dev/ttyAMA0',baudrate=115200, timeout=3.0)

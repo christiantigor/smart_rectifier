@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ "$1" = "-g" ]
+then
+echo .1.3.6.1.2.1.25.1.10
+echo integer
+python /home/pi/dev/sr/sandbox/sensors/getSensorVAC.py
+fi
+exit 0

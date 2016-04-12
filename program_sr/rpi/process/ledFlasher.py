@@ -9,9 +9,10 @@ def main():
     try:
         pi = pigpio.pi()
         while True:
-            time.sleep(4)
+            #time.sleep(4)
+            time.sleep(0.2)
             pi.write(23,1)
-            time.sleep(0.5)
+            time.sleep(0.2)
             pi.write(23,0)
     except:
         print 'Error init led flasher'

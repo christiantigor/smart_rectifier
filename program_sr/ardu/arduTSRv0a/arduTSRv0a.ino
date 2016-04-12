@@ -104,10 +104,10 @@ void loop(){
   while(!zeroCross) {
     adcVal = analogRead(pinVAC);
     //Serial.println(adcVal);
-    if(adcVal < 3) {
+    if(adcVal < 10) {
       zeroCross = true;
     }
-    if((millis()-start)>100) zeroCross = true;
+    if((millis()-start)>500) zeroCross = true;
   }
   
   start = millis();
@@ -124,8 +124,7 @@ void loop(){
   if(adcVal > 100.0) {
     //valVAC = adcVal * 1.0;
     //valVAC = adcVal * 0.4540598290;
-    //valVAC = 1.265377856 * adcVal - 388,1546573;
-    valVAC = 5.504587156 * adcVal - 2419,266055;
+    valVAC = adcVal * 0.48889;
   } else {
     valVAC = 0.0;  //To handle case when (sometimes) there is no VAC, but ADC is not zero
   }

@@ -1,4 +1,6 @@
 chargerControl.py is running
 getSensorData.py is running
 prtgprobe is running
+sendSensorData.py is running
 ledFlasher.py is running
+setDefaultConfig.py is running
