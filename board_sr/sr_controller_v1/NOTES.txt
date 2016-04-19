@@ -3,4 +3,4 @@ Revisi untuk board ver1
 - Resistor dibawah SIM Card holder dipindahkan
 - DS1307 dipindahkan sehingga tidak menghalangi spacer
 - Tambah rangkaian rectifier untuk AC monitoring
-- DS1307 dikontrol arduino
+- Tambah tombol reset
