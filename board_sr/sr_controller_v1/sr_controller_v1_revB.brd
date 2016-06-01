@@ -159,6 +159,14 @@
 <wire x1="1.5" y1="22" x2="0" y2="23.5" width="0" layer="20" curve="-90"/>
 <wire x1="18.5" y1="22" x2="20" y2="20.5" width="0" layer="20" curve="-90"/>
 <wire x1="21.5" y1="0" x2="20" y2="1.5" width="0" layer="20" curve="-90"/>
+<text x="26" y="109.75" size="1.778" layer="25">J5</text>
+<text x="46.25" y="108" size="1.778" layer="25">J4</text>
+<text x="40.25" y="99" size="1.778" layer="25">J3</text>
+<text x="42" y="58" size="1.778" layer="25">J2</text>
+<text x="19" y="34.75" size="1.778" layer="25">J6</text>
+<text x="26.75" y="22.75" size="1.778" layer="25">J7</text>
+<text x="27" y="12.75" size="1.778" layer="25">J8</text>
+<text x="45.5" y="33.25" size="1.778" layer="25">J9</text>
 </plain>
 <libraries>
 <library name="microbuilder">

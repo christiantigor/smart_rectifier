@@ -32,10 +32,10 @@
 <layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="yes" active="yes"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="yes" active="yes"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="yes" active="yes"/>
@@ -1604,42 +1604,134 @@ design rules under a new name.</description>
 </pass>
 </autorouter>
 <elements>
-<element name="CL7" library="adafruit" package="LED3MM" value="" x="22" y="22.625" rot="R180"/>
-<element name="CL8" library="adafruit" package="LED3MM" value="" x="16.25" y="27.125" rot="R180"/>
-<element name="CL9" library="adafruit" package="LED3MM" value="" x="16.25" y="22.625" rot="R180"/>
-<element name="RPIF" library="adafruit" package="LED3MM" value="" x="10.5" y="27.125" rot="R180"/>
-<element name="ARDUF" library="adafruit" package="LED3MM" value="" x="10.5" y="22.625" rot="R180"/>
-<element name="SIMN" library="adafruit" package="LED3MM" value="" x="4.75" y="27.125" rot="R180"/>
-<element name="SIMS" library="adafruit" package="LED3MM" value="" x="4.75" y="22.625" rot="R180"/>
-<element name="IC1" library="uln-udn" package="SO16" value="ULN2004AD" x="14" y="13.5" rot="MR0"/>
-<element name="R1" library="resistor" package="M0805" value="R220R" x="22" y="20.375" rot="MR0"/>
-<element name="R2" library="resistor" package="M0805" value="R220R" x="16.25" y="24.875" rot="MR0"/>
-<element name="R3" library="resistor" package="M0805" value="R220R" x="16.25" y="20.375" rot="MR0"/>
-<element name="R4" library="resistor" package="M0805" value="R220R" x="10.5" y="24.875" rot="MR0"/>
-<element name="R5" library="resistor" package="M0805" value="R220R" x="10.5" y="20.375" rot="MR0"/>
-<element name="R6" library="resistor" package="M0805" value="R220R" x="4.75" y="24.875" rot="MR0"/>
-<element name="R7" library="resistor" package="M0805" value="R220R" x="4.75" y="20.375" rot="MR0"/>
-<element name="CTRL_CONN" library="con-lstb" package="MA08-2" value="" x="22" y="3.875" rot="MR180">
+<element name="CL7" library="adafruit" package="LED3MM" value="" x="22" y="22.625" smashed="yes" rot="R180">
+<attribute name="NAME" x="18.756" y="23.595" size="0.8128" layer="25" ratio="10" rot="R270"/>
+<attribute name="VALUE" x="20.095" y="24.276" size="1.27" layer="27" ratio="10" rot="R180"/>
+</element>
+<element name="CL8" library="adafruit" package="LED3MM" value="" x="16.25" y="27.125" smashed="yes" rot="R180">
+<attribute name="NAME" x="13.006" y="28.22" size="0.8128" layer="25" ratio="10" rot="R270"/>
+<attribute name="VALUE" x="14.345" y="28.776" size="1.27" layer="27" ratio="10" rot="R180"/>
+</element>
+<element name="CL9" library="adafruit" package="LED3MM" value="" x="16.25" y="22.625" smashed="yes" rot="R180">
+<attribute name="NAME" x="13.006" y="23.47" size="0.8128" layer="25" ratio="10" rot="R270"/>
+<attribute name="VALUE" x="14.345" y="24.276" size="1.27" layer="27" ratio="10" rot="R180"/>
+</element>
+<element name="RPIF" library="adafruit" package="LED3MM" value="" x="10.5" y="27.125" smashed="yes" rot="R180">
+<attribute name="NAME" x="7.256" y="28.595" size="0.8128" layer="25" ratio="10" rot="R270"/>
+<attribute name="VALUE" x="8.595" y="28.776" size="1.27" layer="27" ratio="10" rot="R180"/>
+</element>
+<element name="ARDUF" library="adafruit" package="LED3MM" value="" x="10.5" y="22.625" smashed="yes" rot="R180">
+<attribute name="NAME" x="7.256" y="24.845" size="0.8128" layer="25" ratio="10" rot="R270"/>
+<attribute name="VALUE" x="8.595" y="24.276" size="1.27" layer="27" ratio="10" rot="R180"/>
+</element>
+<element name="SIMN" library="adafruit" package="LED3MM" value="" x="4.75" y="27.125" smashed="yes" rot="R180">
+<attribute name="NAME" x="1.506" y="28.345" size="0.8128" layer="25" ratio="10" rot="R270"/>
+<attribute name="VALUE" x="2.845" y="28.776" size="1.27" layer="27" ratio="10" rot="R180"/>
+</element>
+<element name="SIMS" library="adafruit" package="LED3MM" value="" x="4.75" y="22.625" smashed="yes" rot="R180">
+<attribute name="NAME" x="1.631" y="23.845" size="0.8128" layer="25" ratio="10" rot="R270"/>
+<attribute name="VALUE" x="2.845" y="24.276" size="1.27" layer="27" ratio="10" rot="R180"/>
+</element>
+<element name="IC1" library="uln-udn" package="SO16" value="ULN2004AD" x="14" y="13.5" smashed="yes" rot="MR0">
+<attribute name="VALUE" x="18.814" y="8.365" size="0.8128" layer="28" ratio="10" rot="MR0"/>
+<attribute name="NAME" x="8.539" y="14.278" size="0.8128" layer="26" ratio="10" rot="MR270"/>
+</element>
+<element name="R1" library="resistor" package="M0805" value="R220R" x="22" y="20.375" smashed="yes" rot="MR0">
+<attribute name="NAME" x="19.859" y="21.141" size="0.8128" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="23.016" y="18.089" size="1.27" layer="28" rot="MR0"/>
+</element>
+<element name="R2" library="resistor" package="M0805" value="R220R" x="16.25" y="24.875" smashed="yes" rot="MR0">
+<attribute name="NAME" x="14.109" y="25.641" size="0.8128" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="17.266" y="22.589" size="1.27" layer="28" rot="MR0"/>
+</element>
+<element name="R3" library="resistor" package="M0805" value="R220R" x="16.25" y="20.375" smashed="yes" rot="MR0">
+<attribute name="NAME" x="14.109" y="21.141" size="0.8128" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="17.266" y="18.089" size="1.27" layer="28" rot="MR0"/>
+</element>
+<element name="R4" library="resistor" package="M0805" value="R220R" x="10.5" y="24.875" smashed="yes" rot="MR0">
+<attribute name="NAME" x="8.359" y="25.641" size="0.8128" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="11.516" y="22.589" size="1.27" layer="28" rot="MR0"/>
+</element>
+<element name="R5" library="resistor" package="M0805" value="R220R" x="10.5" y="20.375" smashed="yes" rot="MR0">
+<attribute name="NAME" x="8.234" y="21.141" size="0.8128" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="11.516" y="18.089" size="1.27" layer="28" rot="MR0"/>
+</element>
+<element name="R6" library="resistor" package="M0805" value="R220R" x="4.75" y="24.875" smashed="yes" rot="MR0">
+<attribute name="NAME" x="2.609" y="25.516" size="0.8128" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="5.766" y="22.589" size="1.27" layer="28" rot="MR0"/>
+</element>
+<element name="R7" library="resistor" package="M0805" value="R220R" x="4.75" y="20.375" smashed="yes" rot="MR0">
+<attribute name="NAME" x="2.609" y="21.016" size="0.8128" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="5.766" y="18.089" size="1.27" layer="28" rot="MR0"/>
+</element>
+<element name="CTRL_CONN" library="con-lstb" package="MA08-2" value="" x="22" y="3.875" smashed="yes" rot="MR180">
 <attribute name="OC_NEWARK" value="unknown" x="22" y="3.875" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MPN" value="" x="22" y="3.875" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MF" value="" x="22" y="3.875" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="OC_FARNELL" value="unknown" x="22" y="3.875" size="1.778" layer="28" rot="MR180" display="off"/>
+<attribute name="NAME" x="11.715" y="7.454" size="0.8128" layer="26" ratio="10" rot="MR180"/>
+<attribute name="VALUE" x="22" y="8.066" size="1.27" layer="28" ratio="10" rot="MR180"/>
 </element>
-<element name="CL1" library="adafruit" package="LED3MM" value="" x="40.25" y="22.625" rot="R180"/>
-<element name="CL0" library="adafruit" package="LED3MM" value="" x="40.25" y="27.125" rot="R180"/>
-<element name="CL3" library="adafruit" package="LED3MM" value="" x="34.5" y="22.625" rot="R180"/>
-<element name="CL2" library="adafruit" package="LED3MM" value="" x="34.5" y="27.125" rot="R180"/>
-<element name="CL5" library="adafruit" package="LED3MM" value="" x="28.75" y="22.625" rot="R180"/>
-<element name="CL4" library="adafruit" package="LED3MM" value="" x="28.75" y="27.125" rot="R180"/>
-<element name="CL6" library="adafruit" package="LED3MM" value="" x="22" y="27.125" rot="R180"/>
-<element name="IC2" library="uln-udn" package="SO16" value="ULN2004AD" x="30" y="13.5" rot="MR0"/>
-<element name="R8" library="resistor" package="M0805" value="R220R" x="40.25" y="20.375" rot="MR0"/>
-<element name="R9" library="resistor" package="M0805" value="R220R" x="40.25" y="24.875" rot="MR180"/>
-<element name="R10" library="resistor" package="M0805" value="R220R" x="34.5" y="20.375" rot="MR180"/>
-<element name="R11" library="resistor" package="M0805" value="R220R" x="34.5" y="24.875" rot="MR180"/>
-<element name="R12" library="resistor" package="M0805" value="R220R" x="28.75" y="20.375" rot="MR0"/>
-<element name="R13" library="resistor" package="M0805" value="R220R" x="28.75" y="24.875" rot="MR180"/>
-<element name="R14" library="resistor" package="M0805" value="R220R" x="22" y="24.875" rot="MR0"/>
+<element name="CL1" library="adafruit" package="LED3MM" value="" x="40.25" y="22.625" smashed="yes" rot="R180">
+<attribute name="NAME" x="37.006" y="23.47" size="0.8128" layer="25" ratio="10" rot="R270"/>
+<attribute name="VALUE" x="38.345" y="24.276" size="1.27" layer="27" ratio="10" rot="R180"/>
+</element>
+<element name="CL0" library="adafruit" package="LED3MM" value="" x="40.25" y="27.125" smashed="yes" rot="R180">
+<attribute name="NAME" x="37.006" y="28.22" size="0.8128" layer="25" ratio="10" rot="R270"/>
+<attribute name="VALUE" x="38.345" y="28.776" size="1.27" layer="27" ratio="10" rot="R180"/>
+</element>
+<element name="CL3" library="adafruit" package="LED3MM" value="" x="34.5" y="22.625" smashed="yes" rot="R180">
+<attribute name="NAME" x="31.256" y="23.595" size="0.8128" layer="25" ratio="10" rot="R270"/>
+<attribute name="VALUE" x="32.595" y="24.276" size="1.27" layer="27" ratio="10" rot="R180"/>
+</element>
+<element name="CL2" library="adafruit" package="LED3MM" value="" x="34.5" y="27.125" smashed="yes" rot="R180">
+<attribute name="NAME" x="31.256" y="28.22" size="0.8128" layer="25" ratio="10" rot="R270"/>
+<attribute name="VALUE" x="32.595" y="28.776" size="1.27" layer="27" ratio="10" rot="R180"/>
+</element>
+<element name="CL5" library="adafruit" package="LED3MM" value="" x="28.75" y="22.625" smashed="yes" rot="R180">
+<attribute name="NAME" x="25.381" y="23.47" size="0.8128" layer="25" ratio="10" rot="R270"/>
+<attribute name="VALUE" x="26.845" y="24.276" size="1.27" layer="27" ratio="10" rot="R180"/>
+</element>
+<element name="CL4" library="adafruit" package="LED3MM" value="" x="28.75" y="27.125" smashed="yes" rot="R180">
+<attribute name="NAME" x="25.381" y="28.22" size="0.8128" layer="25" ratio="10" rot="R270"/>
+<attribute name="VALUE" x="26.845" y="28.776" size="1.27" layer="27" ratio="10" rot="R180"/>
+</element>
+<element name="CL6" library="adafruit" package="LED3MM" value="" x="22" y="27.125" smashed="yes" rot="R180">
+<attribute name="NAME" x="18.756" y="28.345" size="0.8128" layer="25" ratio="10" rot="R270"/>
+<attribute name="VALUE" x="20.095" y="28.776" size="1.27" layer="27" ratio="10" rot="R180"/>
+</element>
+<element name="IC2" library="uln-udn" package="SO16" value="ULN2004AD" x="30" y="13.5" smashed="yes" rot="MR0">
+<attribute name="VALUE" x="34.814" y="8.365" size="0.8128" layer="28" ratio="10" rot="MR0"/>
+<attribute name="NAME" x="36.289" y="14.403" size="0.8128" layer="26" ratio="10" rot="MR270"/>
+</element>
+<element name="R8" library="resistor" package="M0805" value="R220R" x="40.25" y="20.375" smashed="yes" rot="MR0">
+<attribute name="NAME" x="38.109" y="21.016" size="0.8128" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="41.266" y="18.089" size="1.27" layer="28" rot="MR0"/>
+</element>
+<element name="R9" library="resistor" package="M0805" value="R220R" x="40.25" y="24.875" smashed="yes" rot="MR180">
+<attribute name="NAME" x="37.266" y="24.109" size="0.8128" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="39.234" y="27.161" size="1.27" layer="28" rot="MR180"/>
+</element>
+<element name="R10" library="resistor" package="M0805" value="R220R" x="34.5" y="20.375" smashed="yes" rot="MR180">
+<attribute name="NAME" x="31.516" y="19.359" size="0.8128" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="33.484" y="22.661" size="1.27" layer="28" rot="MR180"/>
+</element>
+<element name="R11" library="resistor" package="M0805" value="R220R" x="34.5" y="24.875" smashed="yes" rot="MR180">
+<attribute name="NAME" x="31.516" y="23.984" size="0.8128" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="33.484" y="27.161" size="1.27" layer="28" rot="MR180"/>
+</element>
+<element name="R12" library="resistor" package="M0805" value="R220R" x="28.75" y="20.375" smashed="yes" rot="MR0">
+<attribute name="NAME" x="26.609" y="21.391" size="0.8128" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="29.766" y="18.089" size="1.27" layer="28" rot="MR0"/>
+</element>
+<element name="R13" library="resistor" package="M0805" value="R220R" x="28.75" y="24.875" smashed="yes" rot="MR180">
+<attribute name="NAME" x="25.766" y="23.859" size="0.8128" layer="26" rot="MR90"/>
+<attribute name="VALUE" x="27.734" y="27.161" size="1.27" layer="28" rot="MR180"/>
+</element>
+<element name="R14" library="resistor" package="M0805" value="R220R" x="22" y="24.875" smashed="yes" rot="MR0">
+<attribute name="NAME" x="19.859" y="25.891" size="0.8128" layer="26" rot="MR270"/>
+<attribute name="VALUE" x="23.016" y="22.589" size="1.27" layer="28" rot="MR0"/>
+</element>
 </elements>
 <signals>
 <signal name="GND">
