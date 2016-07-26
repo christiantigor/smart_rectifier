@@ -1,0 +1,266 @@
+var otdControllers = angular.module('otdControllers', []);
+
+function activate(id) {
+	id == 'report' ? $("#report").addClass("active") : $("#report")
+			.removeClass("active");
+	id == 'about' ? $("#about").addClass("active") : $("#about").removeClass(
+			"active");
+}
+
+function setCookie(cname, cvalue, exdays) {
+	var d = new Date();
+	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+	var expires = "expires=" + d.toUTCString();
+	document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+function getCookie(cname) {
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	for ( var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ')
+			c = c.substring(1);
+		if (c.indexOf(name) == 0)
+			return c.substring(name.length, c.length);
+	}
+	return "";
+}
+
+var loadingError;
+
+function showLoading() {
+	$('#loadingDialog').modal('show');
+}
+
+function dismissLoading() {
+	$('#loadingDialog').modal('hide');
+
+	if (loadingError != null) {
+		clearTimeout(loadingError);
+	}
+
+	loadingError = null;
+}
+
+function showAlert($scope, title, message) {
+	$('#loadingDialog').modal('hide');
+
+	$scope.errorTitle = title;
+	$scope.errorMessage = message;
+	$scope.$apply();
+
+	$('#alertDialog').modal('show');
+}
+
+otdControllers.controller('MainCtrl', [ '$scope', function($scope) {
+	activate('');
+	$.material.init();
+} ]);
+
+otdControllers.controller('AboutCtrl', [ '$scope', function($scope) {
+	activate('about');
+	$.material.init();
+} ]);
+
+otdControllers.controller('ReportCtrl', [
+		'$scope',
+		'$sce',
+		'Config',
+		'Types',
+		'Reports',
+		function($scope, $sce, Config, Types, Reports) {
+			activate('report');
+
+			var birtUrl = null;
+			var dataSourceUrl = null;
+			var dataSourceUser = null;
+			var dataSourcePass = null;
+
+			Config.query({}, function(config) {
+				birtUrl = "http://" + config.birtViewerUrl + "/";
+				dataSourceUrl = config.dataSourceUrl;
+				dataSourceUser = config.dataSourceUsername;
+				dataSourcePass = config.dataSourcePassword;
+
+				Types.query({}, function(types) {
+					$scope.types = types;
+					if (types.length != 0) {
+						$scope.selectType(types[0]);
+					}
+				}, function(error) {
+					console.log(error);
+					$scope.fail = true;
+				});
+			}, function(error) {
+				console.log(error);
+				$scope.fail = true;
+			});
+
+			$scope.selectType = function(type) {
+				$scope.selectedType = type;
+				$scope.selectedReport = null;
+				$scope.filter();
+			};
+
+			$scope.createReport = function() {
+				$scope.selectedReport = new Object();
+				$scope.selectedReport.filename = "Custom Report";
+
+				var startDate = $('#datetimepicker4').data("DateTimePicker")
+						.date();
+				startDate = startDate.format('YYYY-MM-DD');
+
+				var endDate = $('#datetimepicker5').data("DateTimePicker")
+						.date();
+				endDate = endDate.format('YYYY-MM-DD');
+
+				var reportPath = "";
+				reportPath += birtUrl;
+				reportPath += "frameset?__report="
+						+ $scope.selectedType.reportDesignName;
+				reportPath += "&data-source-url=" + dataSourceUrl;
+				reportPath += "&data-source-user=" + dataSourceUser;
+				reportPath += "&data-source-pass=" + dataSourcePass;
+				reportPath += "&start_report_date=" + startDate;
+				reportPath += "&end_report_date=" + endDate;
+
+				if ($scope.lastReportPath != reportPath) {
+					$scope.lastReportPath = reportPath;
+					$scope.reportPath = $sce.trustAsResourceUrl(reportPath);
+					$scope.loading = true;
+
+					showLoading();
+
+					loadingError = setTimeout(function() {
+						showAlert($scope, "Error", "Connection Timed Out");
+
+						$scope.lastReportPath = "";
+						$scope.reportPath = $sce.trustAsResourceUrl("");
+					}, 30000);
+				}
+			};
+
+			$scope.selectReport = function(report) {
+				$scope.selectedReport = report;
+
+				var reportPath = "";
+				reportPath += birtUrl;
+				reportPath += "frameset?__report="
+						+ $scope.selectedType.reportDesignName;
+				reportPath += "&data-source-url=" + dataSourceUrl;
+				reportPath += "&data-source-user=" + dataSourceUser;
+				reportPath += "&data-source-pass=" + dataSourcePass;
+				reportPath += "&start_report_date=" + report.startDate;
+				reportPath += "&end_report_date=" + report.endDate;
+
+				if ($scope.lastReportPath != reportPath) {
+					$scope.lastReportPath = reportPath;
+					$scope.reportPath = $sce.trustAsResourceUrl(reportPath);
+					$scope.loading = true;
+
+					showLoading();
+
+					loadingError = setTimeout(function() {
+						showAlert($scope, "Error", "Connection Timed Out");
+
+						$scope.lastReportPath = "";
+						$scope.reportPath = $sce.trustAsResourceUrl("");
+					}, 30000);
+				}
+			};
+
+			$scope.filter = function() {
+				var year = $('#datetimepicker1').data("DateTimePicker").date();
+				year = year.format('YYYY');
+
+				Reports.query({
+					reportType : $scope.selectedType.typeName,
+					year : year
+				},
+						function(reports) {
+							for ( var i = 0; i < reports.length; i++) {
+								reports[i].createdDate = moment(
+										reports[i].modifiedDate).format(
+										"DD MMMM YYYY HH:mm:ss");
+
+								date = moment(reports[i].reportDate).date(1);
+								reports[i].startDate = date
+										.format("YYYY-MM-DD");
+								reports[i].endDate = date.endOf("month")
+										.format("YYYY-MM-DD");
+								reports[i].month = date.format("MMMM");
+								reports[i].downloadLink = wsurl
+										+ "/download-report?fileName="
+										+ reports[i].fileName;
+							}
+
+							$scope.report1 = createTableModel(reports, 5, 10);
+
+							$.material.init();
+
+							dismissLoading();
+						}, function(error) {
+							console.log(error);
+							showAlert($scope, error.status + " - "
+									+ error.statusText, error.data.exception);
+						});
+
+				showLoading();
+			};
+
+			$scope.download = function(report) {
+				location.href = report.downloadLink;
+			};
+
+			$scope.finishLoading = function() {
+				dismissLoading();
+
+				$scope.loading = false;
+				$scope.$apply();
+			};
+
+			$scope.unselectReport = function() {
+				$scope.selectedReport = null;
+			};
+
+			var dateMax = new Date();
+			dateMax.setDate(dateMax.getDate() - 1);
+
+			var dateMin = new Date();
+			dateMin.setDate(1);
+			dateMin.setMonth(0);
+			dateMin.setYear(1970);
+			dateMin.setHours(0, 0, 0, 0);
+
+			$('#datetimepicker1').datetimepicker({
+				format : 'YYYY',
+				maxDate : dateMax,
+				minDate : dateMin
+			});
+
+			$('#datetimepicker4').datetimepicker({
+				format : 'DD MMMM YYYY',
+				maxDate : dateMax,
+				minDate : dateMin,
+				widgetPositioning : {
+					vertical : 'top'
+				}
+			});
+			$('#datetimepicker5').datetimepicker({
+				format : 'DD MMMM YYYY',
+				maxDate : dateMax,
+				minDate : dateMin,
+				widgetPositioning : {
+					vertical : 'top'
+				}
+			});
+			$("#datetimepicker4").on("dp.change", function(e) {
+				$('#datetimepicker5').data("DateTimePicker").minDate(e.date);
+			});
+			$("#datetimepicker5").on("dp.change", function(e) {
+				$('#datetimepicker4').data("DateTimePicker").maxDate(e.date);
+			});
+
+			$.material.init();
+		} ]);

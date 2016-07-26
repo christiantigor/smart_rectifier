@@ -1,0 +1,218 @@
+<md-toolbar>
+<div class="md-toolbar-tools"
+	style="padding-left: 24px; padding-right: 24px">
+	<h5>TSR Web Server</h5>
+	<span flex></span>
+	<md-button class="md-icon-button" aria-label="Restart"
+		ng-click="restart($event)"> <md-icon
+		md-font-set="material-icons">replay</md-icon> <md-tooltip>
+	Restart </md-tooltip> </md-button>
+	<md-button class="md-icon-button" aria-label="Shutdown"
+		ng-click="turnoff($event)" style="display:none"> <md-icon
+		md-font-set="material-icons">power_settings_new</md-icon> <md-tooltip>
+	Shutdown </md-tooltip> </md-button>
+</div>
+<div style="padding: 0 24px; margin-top: -10px;" layout-gt-xs="row"
+	layout-xs="column" layout-align-gt-xs="center center">
+	<div layout="row" layout-align="start center" style="height: 50px">
+		<h5 class="compact" style="width: 100px">Nama</h5>
+		<md-input-container class="md-block compact"> <input
+			aria-label="devicename" type="text" name="devicename"
+			ng-model="devicename.temp" ng-blur="savename()"
+			onkeydown="blurs(event, this);"
+			style="color: white; border-color: white"></md-input-container>
+	</div>
+	<span flex></span>
+	<div layout="row" layout-align="start center" style="height: 50px">
+		<h5 class="compact" style="width: 100px">Kode</h5>
+		<h5 class="compact">{{mac}}</h5>
+	</div>
+</div>
+</md-toolbar>
+<md-tabs md-dynamic-height md-border-bottom md-selected="selectedtab"> <md-tab
+	label="Status"> <md-content class="md-padding">
+<div class="md-whiteframe-4dp"
+	style="width: 100%; height: 10px; position: absolute; top: -10px; left: 0"></div>
+
+<div layout="row" layout-padding layout-wrap layout-fill
+	style="padding: 8px;" ng-cloak layout-align="center center">
+
+	<div flex-xs="100" flex-gt-xs="33" flex-gt-sm="25"
+		ng-repeat="x in data" style="margin: 0; padding: 0">
+		<md-card>
+		<div layout layout-align="center center"
+			ng-class="'warn-level-'+x.warnlevel"
+			style="color: white; border-radius: 2px 2px 0 0">
+			<h3>{{x.name}}</h3>
+		</div>
+		<md-card-content layout layout-align="center center"
+			style="padding:16px">
+		<h3 style="height: 30px">{{x.value}}{{x.symbol}}</h3>
+		</md-card-content> </md-card>
+	</div>
+</div>
+</md-content> </md-tab> <md-tab label="Monitor"> <md-content class="md-padding">
+<div class="md-whiteframe-4dp"
+	style="width: 100%; height: 10px; position: absolute; top: -10px; left: 0"></div>
+
+<md-card> <md-card-content layout="column" layout-align="right">
+	<div flex="100" layout="row">
+		<span flex></span>
+		<md-input-container>
+        <label>Tipe</label>
+        <md-select ng-model="type" ng-change="change()" style="width:170px">
+          <md-option ng-repeat="x in types" value="{{x.value}}" >{{x.name}}</md-option>
+        </md-select>
+      </md-input-container>		
+      <md-input-container flex-gt-md="30">
+        <label>Waktu</label>
+        <input mdc-datetime-picker date="true" time="true" minute="false" type="text" id="time" short-time="false"
+               placeholder="Waktu"
+               min-date="minDate"
+               max-date="maxDate"
+               format="YYYY-MM-DD HH:mm ~ HH:59"
+               ng-model="monitorDate"
+               ng-change="change(time)">
+    </md-input-container>
+	</div>
+	<div flex="100">
+		<nvd3 options="options" data="dota"></nvd3>
+	</div>
+</md-card-content></md-card>
+</md-content> </md-tab> <md-tab label="History"> <md-content class="md-padding">
+<md-card>
+<md-table-container>
+  <table md-table>
+    <thead md-head>
+      <tr md-row>
+        <th md-column></th>
+        <th md-column colspan="2" style="text-align:center">Tegangan</th>
+        <th md-column colspan="2" style="text-align:center">Arus</th>
+        <th md-column colspan="7" style="text-align:center">Supply</th>
+        <th md-column></th>
+      </tr>
+      <tr md-row>
+        <th md-column>Waktu</th>
+        <th md-column md-numeric>AC</th>
+        <th md-column md-numeric>Baterai</th>
+        <th md-column md-numeric>Baterai</th>
+        <th md-column md-numeric>Beban</th>
+        <th md-column md-numeric>6.5V</th>
+        <th md-column md-numeric>12V</th>
+        <th md-column md-numeric>13.5V</th>
+        <th md-column md-numeric>19.5V</th>
+        <th md-column md-numeric>24V</th>
+        <th md-column md-numeric>48V_A</th>
+        <th md-column md-numeric>48V_B</th>
+        <th md-column md-numeric>Temp</th>
+      </tr>
+    </thead>
+    <tbody md-body>
+      <tr md-row ng-repeat="x in monitorData">
+        <td md-cell>{{x.time}}</td>
+        <td md-cell>{{x.srVAC}}V</td>
+        <td md-cell>{{x.srVBat}}V</td>
+        <td md-cell>{{x.srIBat}}A</td>
+        <td md-cell>{{x.srILoad}}A</td>
+        <td md-cell>{{x.sr6V5}}V</td>
+        <td md-cell>{{x.sr12V}}V</td>
+        <td md-cell>{{x.sr13V5}}V</td>
+        <td md-cell>{{x.sr19V5}}V</td>
+        <td md-cell>{{x.sr24V}}V</td>
+        <td md-cell>{{x.sr48V_A}}V</td>
+        <td md-cell>{{x.sr48V_B}}V</td>
+        <td md-cell>{{x.srTemp}}&#8451;</td>
+      </tr> 
+    </tbody>
+  </table>
+</md-table-container>
+<md-table-pagination md-options="[20, 50, 100]" md-limit="50" md-page="page" md-total="{{monitorDatas.length}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination>
+</md-card>
+
+</md-content> </md-tab><md-tab label="Export"> <md-content class="md-padding">
+<div class="md-whiteframe-4dp"
+	style="width: 100%; height: 10px; position: absolute; top: -10px; left: 0"></div>
+
+<md-card flex-gt-sm="40" flex-offset-gt-sm="30"
+	flex-gt-xs="50" flex-offset-gt-xs="25" flex-xs="100" flex-offset-xs="0"> <md-card-content layout="column" layout-align="right" >
+	<div layout="column">	
+      <md-input-container flex-gt-md="30">
+        <label>Waktu Awal</label>
+        <input mdc-datetime-picker date="true" time="false" type="text"
+               placeholder="Waktu Awal"
+               min-date="minDate"
+               max-date="endDate"
+               format="YYYY-MM-DD"
+               ng-model="startDate">
+    </md-input-container>
+    <md-input-container flex-gt-md="30">
+        <label>Waktu Akhir</label>
+        <input mdc-datetime-picker date="true" time="false" type="text"
+               placeholder="Waktu Akhir"
+               min-date="startDate"
+               max-date="maxDate"
+               format="YYYY-MM-DD"
+               ng-model="endDate">
+    </md-input-container>
+    <div style="width: 100%; text-align: right">
+    	<a ng-href="{{exports()}}">
+		<md-button class="md-raised md-primary">Export Data</md-button></a>
+	</div>
+	</div>
+</md-card-content></md-card>
+</md-content> </md-tab> <md-tab label="Settings"> <md-content class="md-padding">
+<div class="md-whiteframe-4dp"
+	style="width: 100%; height: 10px; position: absolute; top: -10px; left: 0"></div>
+<form name="ipForm" flex-gt-sm="40" flex-offset-gt-sm="30"
+	flex-gt-xs="50" flex-offset-gt-xs="25" flex-xs="100" flex-offset-xs="0"
+	class="md-whiteframe-2dp" style="padding: 16px">
+	<md-input-container class="md-block"> <label>IP
+		Address</label> <input type="text" name="ipaddress" ng-model="ip.address.temp"
+		ng-blur="blurr(ip.address)" onkeydown="blurs(event, this);"
+		ng-pattern="/^([0-9]{1,3}\.){3}[0-9]{1,3}$/">
+	<div ng-messages="ipForm.ipaddress.$error">
+		<div ng-message="pattern">Format IP tidak valid</div>
+	</div>
+	<md-tooltip> Masukan alamat IP yang anda inginkan </md-tooltip> </md-input-container>
+	<md-input-container class="md-block"> <label>Netmask</label>
+	<input type="text" name="subnet" ng-model="ip.subnet.temp"
+		ng-blur="blurr(ip.subnet)" onkeydown="blurs(event, this);"
+		ng-pattern="/^([0-9]{1,3}\.){3}[0-9]{1,3}$/">
+	<div ng-messages="ipForm.subnet.$error">
+		<div ng-message="pattern">Format IP tidak valid</div>
+	</div>
+	<md-tooltip> Masukan Netmask yang and inginkan (biasanya
+	255.255.255.0) </md-tooltip> </md-input-container>
+	<md-input-container class="md-block"> <label>Gateway</label>
+	<input type="text" name="gateway" ng-model="ip.gateway.temp"
+		ng-blur="blurr(ip.gateway)" onkeydown="blurs(event, this);"
+		ng-pattern="/^([0-9]{1,3}\.){3}[0-9]{1,3}$/">
+	<div ng-messages="ipForm.gateway.$error">
+		<div ng-message="pattern">Format IP tidak valid</div>
+	</div>
+	<md-tooltip> Masukan alamat IP gateway di jaringan anda
+	(biasanya x.x.x.1) </md-tooltip> </md-input-container>
+	<md-input-container class="md-block"> <label>Network</label>
+	<input type="text" name="network" ng-model="ip.network.temp"
+		ng-blur="blurr(ip.network)" onkeydown="blurs(event, this);"
+		ng-pattern="/^([0-9]{1,3}\.){3}[0-9]{1,3}$/">
+	<div ng-messages="ipForm.network.$error">
+		<div ng-message="pattern">Format IP tidak valid</div>
+	</div>
+	<md-tooltip> Jika LAN anda punya alamat x.x.x.1 sampai
+	x.x.x.255, masukan x.x.x.0 di Network </md-tooltip> </md-input-container>
+	<md-input-container class="md-block"> <label>Broadcast</label>
+	<input type="text" name="broadcast" ng-model="ip.broadcast.temp"
+		ng-blur="blurr(ip.broadcast)" onkeydown="blurs(event, this);"
+		ng-pattern="/^([0-9]{1,3}\.){3}[0-9]{1,3}$/">
+	<div ng-messages="ipForm.broadcast.$error">
+		<div ng-message="pattern">Format IP tidak valid</div>
+	</div>
+	<md-tooltip> Jika LAN anda punya alamat x.x.x.1 sampai
+	x.x.x.255, masukan x.x.x.255 di Broadcast </md-tooltip> </md-input-container>
+	<div style="width: 100%; text-align: right">
+		<md-button class="md-raised md-primary" ng-click="save()">Simpan</md-button>
+	</div>
+</form>
+
+</md-content> </md-tab> </md-tabs>

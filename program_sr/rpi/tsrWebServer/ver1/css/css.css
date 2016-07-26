@@ -1,0 +1,34 @@
+.warn-level-0 {
+	background-color: #009688;
+}
+
+.warn-level-1 {
+	background-color: #FFEB3B;
+}
+
+.warn-level-2 {
+	background-color: #F44336;
+}
+
+md-tabs md-tabs-wrapper {
+	background-color: #009688;
+	box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0
+		rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+md-tabs.md-default-theme .md-tab.md-active,md-tabs .md-tab.md-active,md-tabs.md-default-theme .md-tab.md-active md-icon,md-tabs .md-tab.md-active md-icon,md-tabs.md-default-theme .md-tab.md-focused,md-tabs .md-tab.md-focused,md-tabs.md-default-theme .md-tab.md-focused md-icon,md-tabs .md-tab.md-focused md-icon
+	{
+	color: #FFFFFF;
+}
+
+md-tabs.md-default-theme .md-tab,md-tabs .md-tab {
+	color: rgba(255, 255, 255, 0.5);
+}
+
+h5.compact,md-input-container.compact {
+	margin: 0;
+}
+
+md-input-container.compact .md-errors-spacer {
+	display: none;
+}

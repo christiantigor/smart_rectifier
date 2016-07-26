@@ -1,0 +1,32 @@
+var wsurl = "http://192.168.9.11:6123/sm-otd-service";
+var otdServices = angular.module('otdServices', [ 'ngResource' ]);
+
+otdServices.factory("Config", [ "$resource", function($resource) {
+	return $resource(wsurl + "/get-configurations", {}, {
+		query : {
+			method : "GET",
+			params : {},
+			isArray : false
+		}
+	});
+} ]);
+
+otdServices.factory("Types", [ "$resource", function($resource) {
+	return $resource(wsurl + "/get-types", {}, {
+		query : {
+			method : "GET",
+			params : {},
+			isArray : true
+		}
+	});
+} ]);
+
+otdServices.factory("Reports", [ "$resource", function($resource) {
+	return $resource(wsurl + "/get-report-files", {}, {
+		query : {
+			method : "GET",
+			params : {},
+			isArray : true
+		}
+	});
+} ]);

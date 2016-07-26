@@ -1,0 +1,39 @@
+<?php
+$servername = "localhost";
+$username = "monitor";
+$password = "1234";
+$dbname = "srDB";
+
+//create connection
+$conn = new mysqli($servername,$username,$password,$dbname);
+//check connection
+if($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT * FROM srCurrent";
+$result = $conn->query($sql);
+$data = $result->fetch_assoc();
+//$valIP = $data["IP"];
+//$valNetmask = $data["Netmask"];
+//$valGateway = $data["Gateway"];
+//$valNetwork = $data["Network"];
+//$valBroadcast = $data["Broadcast"];
+$valIP = "192.168.0.123";
+$valNetmask = "255.255.255.0";
+$valGateway = "192.168.0.2";
+$valNetwork = "192.168.0.0";
+$valBroadcast = "192.168.0.255";
+
+$arr = array(
+    'IP' => $valIP,
+    'Netmask' => $valNetmask,
+    'Gateway' => $valGateway,
+    'Network' => $valNetwork,
+    'Broadcast' => $valBroadcast
+);
+echo json_encode($arr);
+
+$conn->close();
+?>
+

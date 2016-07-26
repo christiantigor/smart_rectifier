@@ -1,0 +1,30 @@
+var otdApp = angular.module('otdApp', [ 'ngRoute', 'otdControllers',
+		'otdServices' ]);
+
+otdApp.config([ '$routeProvider', function($routeProvider) {
+	$routeProvider.when('/report', {
+		templateUrl : 'partials/report.html',
+		controller : 'ReportCtrl'
+	}).when('/home', {
+		templateUrl : 'partials/main.html',
+		controller : 'MainCtrl'
+	}).when('/about', {
+		templateUrl : 'partials/about.html',
+		controller : 'AboutCtrl'
+	}).otherwise({
+		redirectTo : '/home'
+	});
+} ]);
+
+otdApp.directive('iframeOnload', [ function() {
+	return {
+		scope : {
+			callBack : '&iframeOnload'
+		},
+		link : function(scope, element, attrs) {
+			element.on('load', function() {
+				return scope.callBack();
+			});
+		}
+	};
+} ]);
