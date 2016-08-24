@@ -5,53 +5,63 @@
 
 DHT dht(DHTPIN, DHTTYPE);
 
-byte ledCtrl = 0;
-
 //sensor pin
-byte pinVAC     = 3;
-byte pinVBat    = 1;
-byte pinIBat    = 0;
-byte pinILoad   = 2;
-byte pin48V_A   = 5;
-byte pin48V_B   = 4;
-byte pin24V     = 7;
-byte pinSupply  = 6;
+byte SENSOR_VAC     = 3;
+byte SENSOR_VBAT    = 1;
+byte SENSOR_IBAT    = 0;
+byte SENSOR_ILOAD   = 2;
+byte SENSOR_48V_A   = 5;
+byte SENSOR_48V_B   = 4;
+byte SENSOR_24V     = 7;
+byte SENSOR_SPLY    = 6;
 
 //sensor value
-int adcVal        = 0;
-int maxAdcVal     = 0;
-long sumAdcVal    = 0;
-long numReading   = 0;
-int numSamples    = 200;
-float valVAC      = 0.0;
-float valVBat     = 0.0;
-float valIBat     = 0.0;
-float valILoad    = 0.0;
-float val48V_A    = 0.0;
-float val48V_B    = 0.0;
-float val24V      = 0.0;
-float val6V5      = 0.0;
-float val12V      = 0.0;
-float val13V5     = 0.0;
-float val19V5     = 0.0;
-float valTemp     = 0.0;
+int   adcVal        = 0;
+int   maxAdcVal     = 0;
+long  sumAdcVal     = 0;
+long  numReading    = 0;
+int   numSamples    = 200;
+float valVAC        = 0.0;
+float valVBat       = 0.0;
+float valIBat       = 0.0;
+float valILoad      = 0.0;
+float val48V_A      = 0.0;
+float val48V_B      = 0.0;
+float val24V        = 0.0;
+float val6V5        = 0.0;
+float val12V        = 0.0;
+float val13V5       = 0.0;
+float val19V5       = 0.0;
+float valTemp       = 0.0;
+
+//sensor calibration
+float calbVAC       = 0.4610389610;
+float calbVBat      = 0.2334090909;
+float calbIBat      = 0.073982;
+float calbILoad     = 0.073982;
+float calb48V_A     = 0.0536163522;
+float calb48V_B     = 0.0537605042;
+float calb24V       = 0.0292653673;
+float calb16V5      = 0.0097848664;
+float calb12V       = 0.0144177671;
+float calb13V5      = 0.0144551282;
+float calb19V5      = 0.0293917274;
 
 //control pin
-byte pinSelSens1 = 11;
-byte pinSelSens2 = 12;
-byte pinSelSens3 = 13;
+byte SEL_SENSOR_1   = 11;
+byte SEL_SENSOR_2   = 12;
+byte SEL_SENSOR_3   = 13;
 
 //sensor data to send
-char charData[8];
-String strJSON;
-String strData;
+char    charData[8];
+String  strJSON;
+String  strData;
 
-int supplyVoltage;
+int     supplyVoltage;
 boolean zeroCross = false;
 unsigned long start;
 
 void setup(){
-  //Serial.begin(9600);
   Serial.begin(57600);
   
   //begin DHT11
@@ -61,253 +71,226 @@ void setup(){
   //set sensor pin as input
   
   //set control pin as output
-  pinMode(pinSelSens1, OUTPUT);
-  pinMode(pinSelSens2, OUTPUT);
-  pinMode(pinSelSens3, OUTPUT);
+  pinMode(SEL_SENSOR_1, OUTPUT);
+  pinMode(SEL_SENSOR_2, OUTPUT);
+  pinMode(SEL_SENSOR_3, OUTPUT);
   
   //set control pin default
-  digitalWrite(pinSelSens1, LOW);
-  digitalWrite(pinSelSens2, LOW);
-  digitalWrite(pinSelSens3, LOW);
+  digitalWrite(SEL_SENSOR_1, LOW);
+  digitalWrite(SEL_SENSOR_2, LOW);
+  digitalWrite(SEL_SENSOR_3, LOW);
 
   //discarding first readings
-  for(int i=0; i<numSamples; i++) {
-    analogRead(pinVAC);  
-  }
+  //for(int i=0; i<numSamples; i++) {
+  //  analogRead(SENSOR_VAC);  
+  //}
 }
 
 void loop(){
   //read sensor value
   
-  //VAC
-  start = millis();
-  
   while(true){
+    //VAC
+    start = millis();
     zeroCross = false;
     while(!zeroCross) {
-      adcVal = analogRead(pinVAC);
-      if(adcVal < 90) {
+      adcVal = analogRead(SENSOR_VAC);
+      if(adcVal < 100.0) {
         Serial.print("\n");
         zeroCross = true;  
       } 
       if((millis()-start)>2000) zeroCross = true;  
     }
 
+    //find max ADC val for VAC for certain duration
+    //the max ADC value indicate the real VAC voltage
+    //we choose this method instead of RMS to make it sense surge voltage
     start = millis();
     maxAdcVal = 0;
     while(true){
-      adcVal = analogRead(pinVAC);
+      adcVal = analogRead(SENSOR_VAC);
       if(adcVal > maxAdcVal) {
         maxAdcVal = adcVal;  
       }
       delay(1);
       if((millis()-start)>500) break;
     }
-    Serial.println(maxAdcVal);
-  }
-  
-  /*
-  start = millis();
-  
-  zeroCross = false;
-  while(!zeroCross) {
-    adcVal = analogRead(pinVAC);
-    if(adcVal < 90) {
-      zeroCross = true;
-      //Serial.print("\n");  
-    } 
-    if((millis()-start)>2000) zeroCross = true;  
-  }
 
-  sumAdcVal = 0;
-  numReading = 0;
-  start = millis();
-  while(true){
-    adcVal = analogRead(pinVAC);
-    sumAdcVal += adcVal;
-    numReading++;
-    //Serial.println(adcVal);
-    delay(1);
-    if((millis()-start)>500) break;
+    //handle case when there is no VAC, but ADC is not zero
+    if(maxAdcVal > 100.0) {
+      valVAC = maxAdcVal * calbVAC;
+    } else {
+      valVAC = 0.0;  
+    }
+    //Serial.println(valVAC);
+	
+    //VBat
+    sumAdcVal = 0;
+    for(int i=0; i<numSamples; i++) {
+    	sumAdcVal += analogRead(SENSOR_VBAT);  
+    }
+    adcVal = int(sumAdcVal/numSamples);
+    valVBat = adcVal * calbVBat;
+    
+    //IBat
+    sumAdcVal = 0;
+    for(int i=0; i<numSamples; i++) {
+    	sumAdcVal += analogRead(SENSOR_IBAT);  
+    }
+    adcVal = int(sumAdcVal/numSamples);
+    valIBat = (adcVal-511.0) * calbIBat;
+    //res_adc(V/step) / res_acs(V/A) = A/step
+    //5/1024          / 0.066
+    
+    //ILoad
+    sumAdcVal = 0;
+    for(int i=0; i<numSamples; i++) {
+    	sumAdcVal += analogRead(SENSOR_ILOAD);  
+    }
+    adcVal = int(sumAdcVal/numSamples);
+    valILoad = (adcVal-511.0) * calbILoad;
+    
+    //48V_A
+    sumAdcVal = 0;
+    for(int i=0; i<numSamples; i++) {
+    	sumAdcVal += analogRead(SENSOR_48V_A);  
+    }
+    adcVal = int(sumAdcVal/numSamples);
+    val48V_A = adcVal * calb48V_A;
+    
+    //48V_B
+    sumAdcVal = 0;
+    for(int i=0; i<numSamples; i++) {
+    	sumAdcVal += analogRead(SENSOR_48V_B);  
+    }
+    adcVal = int(sumAdcVal/numSamples);
+    val48V_B = adcVal * calb48V_B;
+    
+    //24V
+    sumAdcVal = 0;
+    for(int i=0; i<numSamples; i++) {
+    	sumAdcVal += analogRead(SENSOR_24V);  
+    }
+    adcVal = int(sumAdcVal/numSamples);
+    val24V = adcVal * calb24V;
+    
+    //SEL_SENSOR_1 = 0; SEL_SENSOR_2 = X; SEL_SENSOR_3 = 0 -> 6V5
+    digitalWrite(SEL_SENSOR_1, LOW);
+    digitalWrite(SEL_SENSOR_3, LOW);
+    delay(10);
+    sumAdcVal = 0;
+    for(int i=0; i<numSamples; i++) {
+    	sumAdcVal += analogRead(SENSOR_SPLY);  
+    }
+    adcVal = int(sumAdcVal/numSamples);
+    val6V5 = adcVal * calb16V5;
+    
+    //SEL_SENSOR_1 = 0; SEL_SENSOR_2 = X; SEL_SENSOR_3 = 1 -> 12V
+    digitalWrite(SEL_SENSOR_1, LOW);
+    digitalWrite(SEL_SENSOR_3, HIGH);
+    delay(10);
+    sumAdcVal = 0;
+    for(int i=0; i<numSamples; i++) {
+    	sumAdcVal += analogRead(SENSOR_SPLY);  
+    }
+    adcVal = int(sumAdcVal/numSamples);
+    val12V = adcVal * calb12V;
+    
+    //SEL_SENSOR_1 = 1; SEL_SENSOR_2 = 0; SEL_SENSOR_3 = X -> 13V5
+    digitalWrite(SEL_SENSOR_1, HIGH);
+    digitalWrite(SEL_SENSOR_2, LOW);
+    delay(10);
+    sumAdcVal = 0;
+    for(int i=0; i<numSamples; i++) {
+    	sumAdcVal += analogRead(SENSOR_SPLY);  
+    }
+    adcVal = int(sumAdcVal/numSamples);
+    val13V5 = adcVal * calb13V5;
+    
+    //SEL_SENSOR_1 = 1; SEL_SENSOR_2 = 1; SEL_SENSOR_3 = X -> 19V5
+    digitalWrite(SEL_SENSOR_1, HIGH);
+    digitalWrite(SEL_SENSOR_2, HIGH);
+    delay(10);
+    sumAdcVal = 0;
+    for(int i=0; i<numSamples; i++) {
+    	sumAdcVal += analogRead(SENSOR_SPLY);  
+    }
+    adcVal = int(sumAdcVal/numSamples);
+    val19V5 = adcVal * calb19V5;
+    
+    //temperature sensor
+    valTemp = dht.readTemperature();
+    if(isnan(valTemp)) {
+    	valTemp = 0.0;
+    }
+    
+    //construct data
+    strJSON = "{\"VAC\":\"";
+    dtostrf(valVAC,4,2,charData);
+    strData = String(charData);
+    strJSON += strData;
+    
+    strJSON += "\",\"VBat\":\"";
+    dtostrf(valVBat,4,2,charData);
+    strData = String(charData);
+    strJSON += strData;
+    
+    strJSON += "\",\"IBat\":\"";
+    dtostrf(valIBat,4,2,charData);
+    strData = String(charData);
+    strJSON += strData;
+    
+    strJSON += "\",\"ILoad\":\"";
+    dtostrf(valILoad,4,2,charData);
+    strData = String(charData);
+    strJSON += strData;
+    
+    strJSON += "\",\"6V5\":\"";
+    dtostrf(val6V5,4,2,charData);
+    strData = String(charData);
+    strJSON += strData;
+    
+    strJSON += "\",\"12V\":\"";
+    dtostrf(val12V,4,2,charData);
+    strData = String(charData);
+    strJSON += strData;
+    
+    strJSON += "\",\"13V5\":\"";
+    dtostrf(val13V5,4,2,charData);
+    strData = String(charData);
+    strJSON += strData;
+    
+    strJSON += "\",\"19V5\":\"";
+    dtostrf(val19V5,4,2,charData);
+    strData = String(charData);
+    strJSON += strData;
+    
+    strJSON += "\",\"24V\":\"";
+    dtostrf(val24V,4,2,charData);
+    strData = String(charData);
+    strJSON += strData;
+    
+    strJSON += "\",\"48V_A\":\"";
+    dtostrf(val48V_A,4,2,charData);
+    strData = String(charData);
+    strJSON += strData;
+    
+    strJSON += "\",\"48V_B\":\"";
+    dtostrf(val48V_B,4,2,charData);
+    strData = String(charData);
+    strJSON += strData;
+    
+    strJSON += "\",\"Temp\":\"";
+    dtostrf(valTemp,4,2,charData);
+    strData = String(charData);
+    strJSON += strData;
+    
+    strJSON += "\"}";
+    
+    //send data via serial
+    Serial.println(strJSON);
+    
+    //some delay
+    delay(1000);
   }
-  adcVal = int(sumAdcVal/numReading);
-  //Serial.println(adcVal);
-  
-  if(adcVal > 100.0) {
-    valVAC = adcVal * 1.0;
-    //valVAC = adcVal * 0.723905;
-  } else {
-    valVAC = 0.0;  //To handle case when (sometimes) there is no VAC, but ADC is not zero
-  }
-  */
-  
-
-  //VBat
-  sumAdcVal = 0;
-  for(int i=0; i<numSamples; i++) {
-    sumAdcVal += analogRead(pinVBat);  
-  }
-  adcVal = int(sumAdcVal/numSamples);
-  valVBat = adcVal * 0.2334090909;
-  
-  //IBat
-  sumAdcVal = 0;
-  for(int i=0; i<numSamples; i++) {
-    sumAdcVal += analogRead(pinIBat);  
-  }
-  adcVal = int(sumAdcVal/numSamples);
-  valIBat = (adcVal-511.0) * 0.073982;
-  //res_adc(V/step) / res_acs(V/A) = A/step
-  //5/1024          / 0.066
-  
-  //ILoad
-  sumAdcVal = 0;
-  for(int i=0; i<numSamples; i++) {
-    sumAdcVal += analogRead(pinILoad);  
-  }
-  adcVal = int(sumAdcVal/numSamples);
-  valILoad = (adcVal-511.0)*0.073982;
-
-  //48V_A
-  sumAdcVal = 0;
-  for(int i=0; i<numSamples; i++) {
-    sumAdcVal += analogRead(pin48V_A);  
-  }
-  adcVal = int(sumAdcVal/numSamples);
-  val48V_A = adcVal * 0.0536163522;
-  
-  //48V_B
-  sumAdcVal = 0;
-  for(int i=0; i<numSamples; i++) {
-    sumAdcVal += analogRead(pin48V_B);  
-  }
-  adcVal = int(sumAdcVal/numSamples);
-  val48V_B = adcVal * 0.0537605042;
-  
-  //24V
-  sumAdcVal = 0;
-  for(int i=0; i<numSamples; i++) {
-    sumAdcVal += analogRead(pin24V);  
-  }
-  adcVal = int(sumAdcVal/numSamples);
-  val24V = adcVal * 0.0292653673;
-  
-  //pinSelSens1 = 0; pinSelSens2 = X; pinSelSens3 = 0 -> 6V5
-  digitalWrite(pinSelSens1, LOW);
-  digitalWrite(pinSelSens3, LOW);
-  delay(10);
-  sumAdcVal = 0;
-  for(int i=0; i<numSamples; i++) {
-    sumAdcVal += analogRead(pinSupply);  
-  }
-  adcVal = int(sumAdcVal/numSamples);
-  val6V5 = adcVal * 0.0097848664;
-
-  //pinSelSens1 = 0; pinSelSens2 = X; pinSelSens3 = 1 -> 12V
-  digitalWrite(pinSelSens1, LOW);
-  digitalWrite(pinSelSens3, HIGH);
-  delay(10);
-  sumAdcVal = 0;
-  for(int i=0; i<numSamples; i++) {
-    sumAdcVal += analogRead(pinSupply);  
-  }
-  adcVal = int(sumAdcVal/numSamples);
-  val12V = adcVal * 0.0144177671;
-  
-  //pinSelSens1 = 1; pinSelSens2 = 0; pinSelSens3 = X -> 13V5
-  digitalWrite(pinSelSens1, HIGH);
-  digitalWrite(pinSelSens2, LOW);
-  delay(10);
-  sumAdcVal = 0;
-  for(int i=0; i<numSamples; i++) {
-    sumAdcVal += analogRead(pinSupply);  
-  }
-  adcVal = int(sumAdcVal/numSamples);
-  val13V5 = adcVal * 0.0144551282;
-  
-  //pinSelSens1 = 1; pinSelSens2 = 1; pinSelSens3 = X -> 19V5
-  digitalWrite(pinSelSens1, HIGH);
-  digitalWrite(pinSelSens2, HIGH);
-  delay(10);
-  sumAdcVal = 0;
-  for(int i=0; i<numSamples; i++) {
-    sumAdcVal += analogRead(pinSupply);  
-  }
-  adcVal = int(sumAdcVal/numSamples);
-  val19V5 = adcVal * 0.0293917274;
-  
-  //temperature sensor
-  valTemp = dht.readTemperature();
-  if(isnan(valTemp)) {
-    valTemp = 0.0;
-  }
-  
-  //construct data
-  strJSON = "{\"VAC\":\"";
-  dtostrf(valVAC,4,2,charData);
-  strData = String(charData);
-  strJSON += strData;
-  
-  strJSON += "\",\"VBat\":\"";
-  dtostrf(valVBat,4,2,charData);
-  strData = String(charData);
-  strJSON += strData;
-  
-  strJSON += "\",\"IBat\":\"";
-  dtostrf(valIBat,4,2,charData);
-  strData = String(charData);
-  strJSON += strData;
-  
-  strJSON += "\",\"ILoad\":\"";
-  dtostrf(valILoad,4,2,charData);
-  strData = String(charData);
-  strJSON += strData;
-
-  strJSON += "\",\"6V5\":\"";
-  dtostrf(val6V5,4,2,charData);
-  strData = String(charData);
-  strJSON += strData;
-  
-  strJSON += "\",\"12V\":\"";
-  dtostrf(val12V,4,2,charData);
-  strData = String(charData);
-  strJSON += strData;
-  
-  strJSON += "\",\"13V5\":\"";
-  dtostrf(val13V5,4,2,charData);
-  strData = String(charData);
-  strJSON += strData;
-  
-  strJSON += "\",\"19V5\":\"";
-  dtostrf(val19V5,4,2,charData);
-  strData = String(charData);
-  strJSON += strData;
-  
-  strJSON += "\",\"24V\":\"";
-  dtostrf(val24V,4,2,charData);
-  strData = String(charData);
-  strJSON += strData;
-  
-  strJSON += "\",\"48V_A\":\"";
-  dtostrf(val48V_A,4,2,charData);
-  strData = String(charData);
-  strJSON += strData;
-  
-  strJSON += "\",\"48V_B\":\"";
-  dtostrf(val48V_B,4,2,charData);
-  strData = String(charData);
-  strJSON += strData;
-  
-  strJSON += "\",\"Temp\":\"";
-  dtostrf(valTemp,4,2,charData);
-  strData = String(charData);
-  strJSON += strData;
-  
-  strJSON += "\"}";
-  
-  //send data via serial
-  Serial.println(strJSON);
-
-  //some delay
-  delay(1000);
 }
