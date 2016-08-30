@@ -5,6 +5,31 @@ import subprocess
 import time
 
 def main():
+    #check chargerControl
+    cmd = 'ps aux | grep chargerControl.py | grep -v grep'
+    psCheck = subprocess.Popen(
+        [cmd],
+        stdout = subprocess.PIPE,
+        stderr = subprocess.PIPE,
+        shell = True
+    )
+    out, err = psCheck.communicate()
+
+    if not bool(re.search('chargerControl.py',out)):
+        cmd = 'python chargerControl.py'
+        psRun = subprocess.Popen(
+            [cmd],
+            stdout = subprocess.PIPE,
+            stderr = subprocess.PIPE,
+            shell = True
+        )
+        time.sleep(3)
+        psRun.terminate()
+        psRun.wait()
+        print 'start chargerControl.py'
+    else:
+        print 'chargerControl.py is running'
+
     #Check getSensorData
     cmd = 'ps aux | grep getSensorData.py | grep -v grep'
     psCheck = subprocess.Popen(

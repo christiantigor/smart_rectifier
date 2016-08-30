@@ -36,6 +36,7 @@ def main():
             time.sleep(5)
             i += 1
     except:
+        pi.set_PWM_dutycycle(CTRL_CHARGING, 0)
         pi.stop()
         sys.exit(1)
 

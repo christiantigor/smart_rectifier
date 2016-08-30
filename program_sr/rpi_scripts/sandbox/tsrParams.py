@@ -28,4 +28,4 @@ defSen = {cols[0]:220, cols[1]:56, cols[2]:56, cols[5]:6.5, cols[6]:12, cols[7]:
 ledPin = {'INDC_SPLY_OUTS':16, 'INDC_HEALTH_RED':20, 'INDC_HEALTH_GREEN':26}
 
 #Blinking routine of each LED
-leds = ['ledSupplyRed.py','ledHealthRed.py','ledHealthGreen.py']
+leds = ['ledSupplyBlue.py','ledHealthRed.py','ledHealthGreen.py']

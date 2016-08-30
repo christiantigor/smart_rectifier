@@ -89,6 +89,7 @@ def main():
                 with db:
                     cmd = ('UPDATE srCurrent SET ' +
                           'srVAC = ' + str(jsonObj.get("VAC","NULL")) + ', ' +
+                          'srVPS = ' + str(jsonObj.get("VPS","NULL")) + ', ' +
                           'srVBat = ' + str(jsonObj.get("VBat","NULL")) + ', ' +
                           'srIBat = ' + str(jsonObj.get("IBat","NULL")) + ', ' +
                           'srILoad = ' + str(jsonObj.get("ILoad","NULL")) + ', ' +
@@ -153,6 +154,7 @@ def main():
                     cmd = ('INSERT INTO srHistory ' +
                           'values(NULL,"' + dtDateTime + '",' +
                           str(jsonObj.get("VAC","NULL")) + ',' +
+                          str(jsonObj.get("VPS","NULL")) + ',' +
                           str(jsonObj.get("VBat","NULL")) + ',' +
                           str(jsonObj.get("IBat","NULL")) + ',' +
                           str(jsonObj.get("ILoad","NULL")) + ',' +

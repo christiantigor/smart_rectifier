@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ "$1" = "-g" ]
 then
-echo .1.3.6.1.2.1.25.1.45
+echo .1.3.6.1.2.1.25.1.55
 echo integer
 python /home/pi/tsr/release/snmp/readSensor.py sr48V_A
 fi

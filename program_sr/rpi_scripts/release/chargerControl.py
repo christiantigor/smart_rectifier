@@ -17,17 +17,17 @@ def main():
             cmd = "SELECT srVBat FROM srCurrent ORDER BY srVBat ASC LIMIT 1"
             curs.execute(cmd)
             value = curs.fetchone()
-            vbat = value[0]
             db.close()
+            vbat = value[0]
             print vbat
             print type(vbat)
 
-            #Charging logic
-            #if vbat is NULL, charging 50%
-            #if vbat < 50, charging 100%
-            #if vbat < 55, charging 75%
+            #Charging logic - lower PWM, lower voltage output
+            #if vbat is NULL, charging 50%, 10 min
+            #if vbat < 50, charging 100%, 10 min
+            #if vbat < 55, charging 75%, 10 min
             #else, not charging
-            #sleep for 1 min to make bat voltage return to normal
+            #sleep for 30 sec to make battery voltage reading return to normal
             if vbat is None:
                 pi.set_PWM_dutycycle(CTRL_CHARGING, 128) #PWM 1/2 on
                 time.sleep(600)
