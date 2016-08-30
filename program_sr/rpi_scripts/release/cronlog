@@ -1,2 +1,3 @@
-chargerControl.py is running
-getSensorData.py is running
+start chargerControl.py
+start getSensorData.py
+start resetDevice.py

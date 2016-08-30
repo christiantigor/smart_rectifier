@@ -64,6 +64,7 @@ def main():
     #Network or temp error slow blinking red
 
     #Set all pin low
+    #Run pigpiod is called on getSensorData script
     pi = pigpio.pi()
     pi.write(ledPin['INDC_SPLY_OUTS'],0)
     pi.write(ledPin['INDC_HEALTH_GREEN'],0)
@@ -186,40 +187,40 @@ def main():
             #Health
             #Normal slow blinking green
             #Network or temp error slow blinking red
-            try:
-                #Check network
-                if checkInet(host):
-                    statInet = True
-                    print 'Network ok'
-                else:
-                    statInet = False
-                    print 'Error Network'
-                #Check temp
-                if defSen['srTemp']*(1-err) < temp < defSen['srTemp']*(1+err):
-                    statTemp = True
-                    print 'Temp ok'
-                else:
-                    statTemp = False
-                    print 'Error Temp'
-
-                #Led
-                if statInet == True and statTemp == True and (lastStatHealth == False or lastStatHealth is None):
-                    print 'slow blinking green'
-                    turnLedOff('ledHealthRed.py')
-                    turnLedOn('ledHealthGreen.py')
-                    lastStatHealth = True
-                elif statInet == False or statTemp == False and (lastStatHealth == True or lastStatHealth is None):
-                    print 'slow blinking red'
-                    turnLedOff('ledHealthGreen.py')
-                    turnLedOn('ledHealthRed.py')
-                    lastStatHealth = False
-                else:
-                    pass
-            except:
-                print 'Error indicator health'
-                sys.exit(1)
+            #try:
+            #    #Check network
+            #    if checkInet(host):
+            #        statInet = True
+            #        print 'Network ok'
+            #    else:
+            #        statInet = False
+            #        print 'Error Network'
+            #    #Check temp
+            #    if defSen['srTemp']*(1-err) < temp < defSen['srTemp']*(1+err):
+            #        statTemp = True
+            #        print 'Temp ok'
+            #    else:
+            #        statTemp = False
+            #        print 'Error Temp'
+            #
+            #    #Led
+            #    if statInet == True and statTemp == True and (lastStatHealth == False or lastStatHealth is None):
+            #        print 'slow blinking green'
+            #        #turnLedOff('ledHealthRed.py')
+            #        #turnLedOn('ledHealthGreen.py')
+            #        lastStatHealth = True
+            #    elif statInet == False or statTemp == False and (lastStatHealth == True or lastStatHealth is None):
+            #        print 'slow blinking red'
+            #        #turnLedOff('ledHealthGreen.py')
+            #        #turnLedOn('ledHealthRed.py')
+            #        lastStatHealth = False
+            #    else:
+            #        pass
+            #except:
+            #    print 'Error indicator health'
+            #    sys.exit(1)
             
-            time.sleep(10)
+            time.sleep(5)
     except:
         print 'Error led flasher'
         turnLedOff('ledSupplyBlue.py')

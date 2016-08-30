@@ -29,3 +29,6 @@ ledPin = {'INDC_SPLY_OUTS':16, 'INDC_HEALTH_RED':20, 'INDC_HEALTH_GREEN':26}
 
 #Blinking routine of each LED
 leds = ['ledSupplyRed.py','ledHealthRed.py','ledHealthGreen.py']
+
+#Reset button
+rstButton = 12

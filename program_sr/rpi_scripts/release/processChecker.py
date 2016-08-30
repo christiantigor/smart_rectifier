@@ -55,5 +55,30 @@ def main():
     else:
         print 'getSensorData.py is running'
 
+    #Check resetDevice
+    cmd = 'ps aux | grep resetDevice.py | grep -v grep'
+    psCheck = subprocess.Popen(
+        [cmd],
+        stdout = subprocess.PIPE,
+        stderr = subprocess.PIPE,
+        shell = True
+    )
+    out, err = psCheck.communicate()
+
+    if not bool(re.search('resetDevice.py',out)):
+        cmd = 'python resetDevice.py'
+        psRun = subprocess.Popen(
+            [cmd],
+            stdout = subprocess.PIPE,
+            stderr = subprocess.PIPE,
+            shell = True
+        )
+        time.sleep(3)
+        psRun.terminate()
+        psRun.wait()
+        print 'start resetDevice.py'
+    else:
+        print 'resetDevice.py is running'
+
 if __name__ == '__main__':
     main()
