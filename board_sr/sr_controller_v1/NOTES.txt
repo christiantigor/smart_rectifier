@@ -1,4 +1,4 @@
-Revisi untuk board ver1
+Revisi untuk board ver1 - OK
 - Sudut - sudut buat melengkung
 - Resistor dibawah SIM Card holder dipindahkan
 - DS1307 dipindahkan sehingga tidak menghalangi spacer

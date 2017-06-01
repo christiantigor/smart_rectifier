@@ -1,0 +1,31 @@
+Partlist exported from C:/Users/tritronik/Documents/GitHub/smart_rectifier/board_sr/sr_controller_v1/sr_controller_v1_revC.sch at 10/06/2016 11:10:59
+
+Qty Device                     
+9   1x2 Blue Terminal         
+7   1x2 Green Terminal        
+1   Baterry Holder CR2032     
+3   1x40 Header Male          
+1   Bridge Rectifier 1A       
+1   RTC DS1307 SMD            
+1   Tactical Switch           
+1   1N4728                    
+1   1x2 White Terminal for Fan
+1   Crystal 32kHz             
+3   Blade Fuse Holder         
+1   74HC4053D	SMD           
+2   ACS712                    
+2   C100nF		SMD 0805      
+2   C1nF		SMD 0805      
+1   C4.7uF		SMD 0805      
+1   C470uF		Cap Polar     
+1   LM741		SMD           
+1   R100K		SMD 0805 	
+15  R10K		SMD 0805 	
+1   R150K		SMD 0805 	
+6   R1K			SMD 0805 	
+1   R220R		SMD 0805 	
+1   R270K		1.5Watt		
+3   R2K			SMD 0805 	
+1   R47R		SMD 0805 	
+1   R5.1K		1.5Watt		
+3   R5.1K		SMD 0805 	
